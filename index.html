@@ -233,6 +233,7 @@
   .section-btn.active{ background:var(--surface); color:var(--red); box-shadow: 0 1px 3px rgba(20,20,20,0.08); }
   .section-btn.clientes-btn.active{ color: var(--accent); }
   .section-btn.vac-btn.active{ color: #1f8a4c; }
+  .section-btn.amz-btn.active{ color: #e07b00; }
   .sheet-tabs{
     position: fixed; bottom:0; left:0; right:0;
     background: var(--surface); border-top:1px solid var(--line);
@@ -442,11 +443,19 @@
     <button class="section-btn" id="navPendientes">📋 Pendientes</button>
     <button class="section-btn clientes-btn" id="navClientes">🏢 Clientes</button>
     <button class="section-btn vac-btn" id="navVacaciones">🏖️ Vacaciones</button>
+    <button class="section-btn amz-btn" id="navAmazon">📦 Reportes Amazon</button>
   </div>
 
   <div class="daily-banner" id="dailyBanner">
     <div class="daily-banner-text" id="dailyBannerText"></div>
     <button class="daily-banner-close" id="dailyBannerClose">Entendido ✕</button>
+  </div>
+
+  <div class="daily-banner" id="fbMissingBanner" style="border-color:#D1001F;background:#fbe7ea;">
+    <div class="daily-banner-text">
+      ⚠️ <b>Firebase no encuentra tu documento de datos.</b> No se sobrescribió nada — la pantalla está vacía a propósito para no arriesgar información. Si esto es una instalación nueva de verdad, puedes sembrarla con datos base (pide PIN). Si NO esperabas ver esto, avísale a Carlos antes de tocar cualquier cosa.
+    </div>
+    <button class="daily-banner-close" id="btnSeedNow" style="background:#D1001F;color:#fff;border-color:#D1001F;">🔒 Sembrar datos base</button>
   </div>
 
   <div class="strip" id="stripPendientes">
@@ -611,6 +620,63 @@
     <div class="vac-list" id="vacList"></div>
   </div>
 
+  <div class="editor" id="amzEditor">
+    <h3 id="amzEditorTitle">Nuevo reporte Amazon</h3>
+    <div class="form-grid three">
+      <div>
+        <label>Fecha</label>
+        <input type="date" id="amzFecha">
+      </div>
+      <div>
+        <label>Tipo de solicitud</label>
+        <input type="text" id="amzTipo" placeholder="Ej. Reporte">
+      </div>
+      <div>
+        <label>Case ID</label>
+        <input type="text" id="amzCaseId" placeholder="Ej. V2236519565">
+      </div>
+    </div>
+    <div class="form-grid three">
+      <div>
+        <label>Locker</label>
+        <input type="text" id="amzLocker" placeholder="Ej. Chavela">
+      </div>
+      <div>
+        <label>Ubicación</label>
+        <input type="text" id="amzUbicacion" placeholder="Ej. 7 Eleven Aztecas">
+      </div>
+      <div>
+        <label>Ingeniero que asistió</label>
+        <select id="amzIng"></select>
+      </div>
+    </div>
+    <div>
+      <label>Descripción</label>
+      <input type="text" id="amzDescripcion" placeholder="Ej. Se reportó sin energía">
+    </div>
+    <div>
+      <label>Comentarios (opcional)</label>
+      <textarea id="amzComentarios" placeholder="Detalles adicionales"></textarea>
+    </div>
+    <div class="editor-actions">
+      <button class="btn-ghost" id="btnAmzCancel">Cancelar</button>
+      <button class="btn-save" id="btnAmzSave">Guardar reporte</button>
+    </div>
+  </div>
+
+  <div id="amzSection" style="display:none;">
+    <div class="vac-year-nav">
+      <button class="vac-year-btn" id="amzMonthPrev">‹</button>
+      <div class="vac-year-label" id="amzMonthLabel" style="min-width:150px;text-align:center;"></div>
+      <button class="vac-year-btn" id="amzMonthNext">›</button>
+      <div class="chip" id="amzChipTodos" style="margin-left:6px;">Ver todos</div>
+      <button class="btn-refresh" id="btnAmzMail" style="margin-left:auto;">📧 Enviar resumen del mes</button>
+      <button class="btn-new" id="btnAmzNew">+ Nuevo reporte</button>
+    </div>
+    <div class="table-scroll"><table class="client-table" id="amzTable"></table></div>
+    <div class="empty" id="amzEmpty" style="display:none;"></div>
+  </div>
+
   <div class="queue" id="queue"></div>
   <div class="charts-grid" id="clientCharts" style="display:none;"></div>
   <div class="empty" id="emptyState" style="display:none;"></div>
@@ -705,6 +771,13 @@ const SEED = {
     "Roberto Jimenez": "roberto.jimenez@aldaramiz.com",
     "Luis": "nuevosproyectos@aldaramiz.com"
   },
+  reportesAmazon: [
+    {"id": 9001, "fecha": "2026-06-08", "tipo": "Reporte", "caseId": "V2236519565", "locker": "Chavela", "descripcion": "slots offline", "ubicacion": "7 eleven  Aztecas", "ingAsistio": "Angel Calvario", "comentarios": ""},
+    {"id": 9002, "fecha": "2026-06-16", "tipo": "Reporte", "caseId": "V2244211791", "locker": "Aliso", "descripcion": "se reporto sin energía", "ubicacion": "7 Eleven real de Bosque", "ingAsistio": "Juan Jimenez", "comentarios": ""},
+    {"id": 9003, "fecha": "2026-06-22", "tipo": "Reporte", "caseId": "V2258627940", "locker": "Ladrillos", "descripcion": "se reporto sin energía", "ubicacion": "7 Eleven Montevideo", "ingAsistio": "Angel Calvario", "comentarios": ""},
+    {"id": 9004, "fecha": "2026-06-29", "tipo": "Reporte", "caseId": "V2265856655", "locker": "Aventura", "descripcion": "se reporto sin energía", "ubicacion": "7 Eleven Real colima", "ingAsistio": "Angel Calvario", "comentarios": ""},
+    {"id": 9005, "fecha": "2026-07-15", "tipo": "Reporte", "caseId": "V2287866249", "locker": "Ladrillos", "descripcion": "problemas en el ipc", "ubicacion": "7 Eleven Montevideo", "ingAsistio": "Angel Calvario", "comentarios": ""}
+  ],
   tasks: [{"id": 2000, "persona": "Luquin", "title": "Cargar Licencias 14 Directas DOcupro", "estado": "Finalizado", "comentario": "Espera acceso servidor CEDIS Occidente", "dueDate": null, "priority": "media"}, {"id": 2001, "persona": "Luquin", "title": "Solicitar Licencias RSS Idesa", "estado": "Finalizado", "comentario": "Solcitada 7 de ocubre", "dueDate": null, "priority": "media"}, {"id": 2002, "persona": "Luquin", "title": "Cargar Licencia Final Stanley", "estado": "Finalizado", "comentario": "Instalada 26 de Enero 2026", "dueDate": null, "priority": "media"}, {"id": 2003, "persona": "Luquin", "title": "Vence licencia Demo Magnera 19 de Enero", "estado": "Finalizado", "comentario": "Instalada 26 de Enero 2026", "dueDate": null, "priority": "media"}, {"id": 2004, "persona": "Luquin", "title": "Zebra pedido demos", "estado": "Finalizado", "comentario": "Entregados27 de marzo 2026", "dueDate": null, "priority": "media"}, {"id": 2005, "persona": "Luquin", "title": "Licencias Faltantes de RIMEX", "estado": "Finalizado", "comentario": "Falta IVEX", "dueDate": null, "priority": "media"}, {"id": 2006, "persona": "Luquin", "title": "Equipos Cambio Fragua", "estado": "Finalizado", "comentario": "Entragas las Llaves flata pedir Isa las Genere", "dueDate": null, "priority": "media"}, {"id": 2007, "persona": "Luquin", "title": "Servidor ricoh GDL para add print", "estado": "Finalizado", "comentario": "En pruebas", "dueDate": null, "priority": "media"}, {"id": 2008, "persona": "Luquin", "title": "Seguimiento solucion de pisa", "estado": "Pendiente", "comentario": "Seguimos en espera de seguimiento", "dueDate": null, "priority": "media"}, {"id": 2009, "persona": "Luquin", "title": "Licencia Adicional COMPAQ", "estado": "Finalizado", "comentario": "Instalada 19 de Junio", "dueDate": null, "priority": "media"}, {"id": 2010, "persona": "Luquin", "title": "Ver videos de ZEbra Equipos Demo", "estado": "Finalizado", "comentario": "Hacer configuraciones", "dueDate": null, "priority": "media"}, {"id": 2011, "persona": "Luquin", "title": "Licencia Adicional Indupac", "estado": "Finalizado", "comentario": "", "dueDate": null, "priority": "media"}, {"id": 2012, "persona": "Luquin", "title": "Licencias IBS GDL Circuit", "estado": "Finalizado", "comentario": "", "dueDate": null, "priority": "media"}, {"id": 2013, "persona": "Luquin", "title": "RSS para Expo", "estado": "Finalizado", "comentario": "Se manda cliente lista", "dueDate": null, "priority": "media"}, {"id": 2014, "persona": "Luquin", "title": "Becnhmark Licencia Carga", "estado": "Finalizado", "comentario": "En espera que legue licencia", "dueDate": null, "priority": "media"}, {"id": 2015, "persona": "Luquin", "title": "Curso de Zebra RFID", "estado": "Finalizado", "comentario": "", "dueDate": null, "priority": "media"}, {"id": 2016, "persona": "Luquin", "title": "Licencia DocuPRO ssiwxmme", "estado": "Finalizado", "comentario": "3 de junio Llega corrctamente pendinete de cargarla", "dueDate": "2026-06-05", "priority": "media"}, {"id": 2017, "persona": "Luquin", "title": "Error Campari Paper Cut Hive", "estado": "Pendiente", "comentario": "Revisando Ecoprint Erro de Cuotas colro", "dueDate": null, "priority": "media"}, {"id": 2018, "persona": "Luquin", "title": "Licnecia RSI Leon La noria", "estado": "Finalizado", "comentario": "Llego el 25 de Junio", "dueDate": null, "priority": "media"}, {"id": 2019, "persona": "Juan Jimenez", "title": "instalar DOcupro COmpaq equipo CDMX", "estado": "Finalizado", "comentario": "Licencia Adicional COMPAQ ( Aun no confirman cuando )", "dueDate": null, "priority": "media"}, {"id": 2020, "persona": "Juan Jimenez", "title": "Ver videos de ZEbra Equipos Demo", "estado": "Finalizado", "comentario": "Hacer configuraciones ( no hay Ribbon para hacer pruebas )", "dueDate": null, "priority": "media"}, {"id": 2021, "persona": "Juan Jimenez", "title": "Sacar los reportes de Nube", "estado": "Finalizado", "comentario": "Lunes", "dueDate": null, "priority": "media"}, {"id": 2022, "persona": "Juan Jimenez", "title": "Entrega de unos HDD ( Gdl Circuit )", "estado": "Pendiente", "comentario": "Para la instlacion de IBS ( P502 )", "dueDate": null, "priority": "media"}, {"id": 2023, "persona": "Juan Jimenez", "title": "Instalacion de CAMPARY ( PaperCut )", "estado": "Finalizado", "comentario": "", "dueDate": null, "priority": "media"}, {"id": 2024, "persona": "Angel Calvario", "title": "Reporte Festo Lector", "estado": "Finalizado", "comentario": "2 lectoras", "dueDate": null, "priority": "media"}, {"id": 2025, "persona": "Angel Calvario", "title": "Meondelez Reporte de RIMEX", "estado": "Finalizado", "comentario": "Rogelio 3318946988  no contesta, se manda correo", "dueDate": null, "priority": "media"}, {"id": 2026, "persona": "Angel Calvario", "title": "Equipo FARMACOS NACIONALES", "estado": "Finalizado", "comentario": "Instalada", "dueDate": null, "priority": "media"}, {"id": 2027, "persona": "Angel Calvario", "title": "Ver videos de ZEbra Equipos Demo", "estado": "Finalizado", "comentario": "En proceso...", "dueDate": null, "priority": "media"}, {"id": 1784324137110, "title": "IBM Lectores", "persona": "Angel Calvario", "estado": "Finalizado", "dueDate": "2026-07-20", "priority": "alta", "comentario": "Quedan pendientes 2 para el Jueves 23 de julio"}, {"id": 1784571084069, "title": "Entrevistas UNIVA para Gestor Documental", "persona": "Luquin", "estado": "Pendiente", "dueDate": "2026-07-25", "priority": "alta", "comentario": ""}, {"id": 1784578592548, "title": "NUbeprint OFIPLAN", "persona": "Angel Calvario", "estado": "Finalizado", "dueDate": "2026-07-21", "priority": "alta", "comentario": ""}, {"id": 1784578613520, "title": "Nube Print RAFAEL GONZALEZ NAVARRO", "persona": "Angel Calvario", "estado": "Finalizado", "dueDate": "2026-07-21", "priority": "alta", "comentario": ""}, {"id": 1784650566598, "title": "Licencia RSS Tres Guerras", "persona": "Luquin", "estado": "Pendiente", "dueDate": "2026-07-25", "priority": "media", "comentario": ""}, {"id": 1784654133081, "title": "Servidro Safe Q en RICOH GDL", "persona": "Luquin", "estado": "Pendiente", "dueDate": "2026-07-24", "priority": "media", "comentario": ""}, {"id": 1784660321038, "title": "Lector Faramcias GDL", "persona": "Juan Jimenez", "estado": "Pendiente", "dueDate": "2026-07-22", "priority": "alta", "comentario": ""}, {"id": 1784731382161, "title": "Manuales para NS para distribuidores y Videos", "persona": "Angel Calvario", "estado": "Pendiente", "dueDate": "2026-07-24", "priority": "media", "comentario": ""}, {"id": 1784830246618, "title": "Pirelli Cotización Lenovo Kioskos", "persona": "Roberto Jimenez", "estado": "Pendiente", "dueDate": "2026-07-29", "priority": "alta", "comentario": "Seguimiento Precios con PM de CVA -correo-"}, {"id": 1784836861257, "title": "CONFIGURACION EQUIPOS IMC401 de NATURE", "persona": "Angel Calvario", "estado": "Pendiente", "dueDate": null, "priority": "media", "comentario": "EN ESPERA DE TONERS DE ARRANQUE"}, {"id": 1785251760577, "title": "Renovación Licencia Toke Duo", "persona": "Roberto Jimenez", "estado": "Pendiente", "dueDate": "2026-08-14", "priority": "media", "comentario": "Seguimiento con Haza de si se cumple los nuevo estándares de autentificación de Microsoft"}, {"id": 1785251808727, "title": "Sala de Juntas - Nidec", "persona": "Roberto Jimenez", "estado": "Pendiente", "dueDate": "2026-07-30", "priority": "media", "comentario": "Cotización de audio checarlo con Fabian"}, {"id": 1785251947702, "title": "Póliza de Mtto Incendios", "persona": "Roberto Jimenez", "estado": "Pendiente", "dueDate": "2026-07-29", "priority": "alta", "comentario": "Mandar cotización de póliza de mtto: juan.gonzalez.yg@zoltek.com - Acceso"}, {"id": 1785251992836, "title": "Seguimiento Videoconferencia Averna", "persona": "Roberto Jimenez", "estado": "Pendiente", "dueDate": "2026-08-06", "priority": "media", "comentario": "Seguimiento con Sulem"}, {"id": 1785252067983, "title": "Seguimiento demo Nu3 Pantalla Interactiva", "persona": "Roberto Jimenez", "estado": "Pendiente", "dueDate": "2026-08-03", "priority": "media", "comentario": "Revisar con Ramiro que le comentaron, checar con Felipe precio."}, {"id": 1785252298928, "title": "Kioskos demo para Tutto Pelle", "persona": "Roberto Jimenez", "estado": "Pendiente", "dueDate": "2026-08-03", "priority": "media", "comentario": "Preguntar a Felipe o a Javier cuando llega"}, {"id": 1785252428998, "title": "Pantallas Sucursal Andrea Gdl", "persona": "Roberto Jimenez", "estado": "Pendiente", "dueDate": "2026-08-03", "priority": "baja", "comentario": "Seguimiento de cuando se pueden instalar las demás pantallas"}, {"id": 1785252471625, "title": "Seguimiento pantallas Sucursal León Andrea", "persona": "Roberto Jimenez", "estado": "Pendiente", "dueDate": "2026-08-20", "priority": "baja", "comentario": "Seguimiento con Andrés para ver si hay noticias del proyecto"}, {"id": 1785252639758, "title": "Ingenio Tamazula - Cableado Estructurado", "persona": "Roberto Jimenez", "estado": "Pendiente", "dueDate": "2026-07-31", "priority": "alta", "comentario": "Seguimiento con Fabian de cotización y revisar NDA con Lucy"}, {"id": 1785253021984, "title": "Grupo Fijursa Seguimiento instalación de Camara", "persona": "Roberto Jimenez", "estado": "Pendiente", "dueDate": "2026-08-03", "priority": "baja", "comentario": "Preguntarle a Nadia si compraron el soporte para la camara"}]
 };
 
@@ -715,6 +788,7 @@ let vacaciones = [];
 let vacAsignados = {};
 let vacVencimientos = {};
 let personEmails = {};
+let reportesAmazon = [];
 let editingId = null;
 let editingClientId = null;
 let editingVacId = null;
@@ -727,6 +801,9 @@ let clientSort = { key:'vencimiento', dir:1 };
 let columnFilters = {}; // { colKey: Set(valoresPermitidos) } — vacío/ausente = sin filtro
 let openFilterCol = null;
 let vacYear = new Date().getFullYear();
+let amzMonthNav = new Date().toISOString().slice(0,7); // "YYYY-MM", empieza en el mes actual
+let amzMonthFilter = amzMonthNav; // 'todos' o "YYYY-MM"
+let editingAmzId = null;
 const VAC_COLORS = ['#D1001F','#1f8a4c','#2f6fdb','#b9760a','#7b4fbf','#0aa6a6','#c2185b','#5d6b7a'];
 const VAC_ADMIN_PIN = '2026';
 let vacAdminUnlocked = false;
@@ -751,14 +828,17 @@ async function loadData(){
         vacAsignados = parsed.vacAsignados || {};
         vacVencimientos = parsed.vacVencimientos || {};
         personEmails = parsed.personEmails || {};
+        reportesAmazon = parsed.reportesAmazon || [];
         setSync('ok', 'Sincronizado');
         await runMigrations();
         render();
       } else {
-        // primera vez: sembramos con los datos base
-        tasks = SEED.tasks; people = SEED.people; clientes = SEED.clientes; vacaciones = SEED.vacaciones; vacAsignados = SEED.vacAsignados; vacVencimientos = SEED.vacVencimientos; personEmails = SEED.personEmails;
-        try{ await fbDocRef.set({ tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, personEmails }); }
-        catch(e){ setSync('err', 'Sin conexión con Firebase'); }
+        // El documento no aparece en Firestore. ANTES esto sobrescribía todo
+        // con datos viejos automáticamente — eso causó una pérdida de información real.
+        // Ahora NUNCA escribe solo: avisa y espera que un admin lo confirme a propósito.
+        tasks = []; people = []; clientes = []; vacaciones = []; vacAsignados = {}; vacVencimientos = {}; personEmails = {}; reportesAmazon = [];
+        setSync('err', 'Firebase no encuentra tus datos — NO se sobrescribió nada, revisa antes de continuar');
+        $('fbMissingBanner').classList.add('show');
       }
     }, (err) => {
       console.error('Firebase onSnapshot error', err);
@@ -779,19 +859,20 @@ async function loadData(){
         vacAsignados = parsed.vacAsignados || {};
         vacVencimientos = parsed.vacVencimientos || {};
         personEmails = parsed.personEmails || {};
+        reportesAmazon = parsed.reportesAmazon || [];
       } else {
-        tasks = SEED.tasks; people = SEED.people; clientes = SEED.clientes; vacaciones = SEED.vacaciones; vacAsignados = SEED.vacAsignados; vacVencimientos = SEED.vacVencimientos; personEmails = SEED.personEmails;
+        tasks = SEED.tasks; people = SEED.people; clientes = SEED.clientes; vacaciones = SEED.vacaciones; vacAsignados = SEED.vacAsignados; vacVencimientos = SEED.vacVencimientos; personEmails = SEED.personEmails; reportesAmazon = SEED.reportesAmazon;
         await persist();
       }
     } catch(e){
-      tasks = SEED.tasks; people = SEED.people; clientes = SEED.clientes; vacaciones = SEED.vacaciones; vacAsignados = SEED.vacAsignados; vacVencimientos = SEED.vacVencimientos; personEmails = SEED.personEmails;
+      tasks = SEED.tasks; people = SEED.people; clientes = SEED.clientes; vacaciones = SEED.vacaciones; vacAsignados = SEED.vacAsignados; vacVencimientos = SEED.vacVencimientos; personEmails = SEED.personEmails; reportesAmazon = SEED.reportesAmazon;
       try{ await persist(); }catch(e2){}
     }
   } else {
     const raw = localStorage.getItem(LOCAL_FALLBACK_KEY);
-    if(raw){ const p = JSON.parse(raw); tasks = p.tasks; people = p.people; clientes = p.clientes || []; vacaciones = p.vacaciones || []; vacAsignados = p.vacAsignados || {}; vacVencimientos = p.vacVencimientos || {}; personEmails = p.personEmails || {}; }
+    if(raw){ const p = JSON.parse(raw); tasks = p.tasks; people = p.people; clientes = p.clientes || []; vacaciones = p.vacaciones || []; vacAsignados = p.vacAsignados || {}; vacVencimientos = p.vacVencimientos || {}; personEmails = p.personEmails || {}; reportesAmazon = p.reportesAmazon || []; }
     else {
-      tasks = SEED.tasks; people = SEED.people; clientes = SEED.clientes; vacaciones = SEED.vacaciones; vacAsignados = SEED.vacAsignados; vacVencimientos = SEED.vacVencimientos; personEmails = SEED.personEmails;
+      tasks = SEED.tasks; people = SEED.people; clientes = SEED.clientes; vacaciones = SEED.vacaciones; vacAsignados = SEED.vacAsignados; vacVencimientos = SEED.vacVencimientos; personEmails = SEED.personEmails; reportesAmazon = SEED.reportesAmazon;
       try{ await persist(); }catch(e2){}
     }
   }
@@ -812,6 +893,7 @@ async function runMigrations(){
   if(faltantes.length){
     await mutateData(data => {
       if(!data.personEmails) data.personEmails = {};
+  if(!data.reportesAmazon) data.reportesAmazon = [];
       faltantes.forEach(p => { if(!data.personEmails[p]) data.personEmails[p] = correosBase[p]; });
     });
   }
@@ -856,7 +938,7 @@ async function runMigrations(){
 
 async function persist(){
   setSync('busy', 'Guardando...');
-  const payload = JSON.stringify({ tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, personEmails });
+  const payload = JSON.stringify({ tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, personEmails, reportesAmazon });
   if(hasSharedStorage){
     try{
       await window.storage.set(STORAGE_KEY, payload, true);
@@ -889,7 +971,10 @@ async function _mutateDataInner(mutatorFn){
     try{
       await db.runTransaction(async (tx) => {
         const snap = await tx.get(fbDocRef);
-        const data = snap.exists ? snap.data() : { tasks:[], people:[], clientes:[], vacaciones:[], vacAsignados:{}, vacVencimientos:{}, personEmails:{} };
+        if(!snap.exists){
+          throw new Error('DOC_NO_EXISTE'); // no seguimos: mejor fallar que escribir encima de un documento perdido
+        }
+        const data = snap.data();
         if(!data.tasks) data.tasks = [];
         if(!data.people) data.people = [];
         if(!data.clientes) data.clientes = [];
@@ -897,6 +982,7 @@ async function _mutateDataInner(mutatorFn){
         if(!data.vacAsignados) data.vacAsignados = {};
         if(!data.vacVencimientos) data.vacVencimientos = {};
         if(!data.personEmails) data.personEmails = {};
+        if(!data.reportesAmazon) data.reportesAmazon = [];
         mutatorFn(data);
         tx.set(fbDocRef, data);
       });
@@ -905,7 +991,12 @@ async function _mutateDataInner(mutatorFn){
       setSync('ok', 'Sincronizado');
     } catch(e){
       console.error('Error de transacción Firebase', e);
-      setSync('err', 'Error al guardar — revisa tu conexión');
+      if(e.message === 'DOC_NO_EXISTE'){
+        setSync('err', 'Bloqueado: Firebase no encuentra tus datos — nada se guardó');
+        $('fbMissingBanner').classList.add('show');
+      } else {
+        setSync('err', 'Error al guardar — revisa tu conexión');
+      }
     }
     return;
   }
@@ -914,13 +1005,13 @@ async function _mutateDataInner(mutatorFn){
   try{
     if(hasSharedStorage){
       const res = await window.storage.get(STORAGE_KEY, true);
-      data = (res && res.value) ? JSON.parse(res.value) : { tasks:[], people:[], clientes:[], vacaciones:[], vacAsignados:{}, vacVencimientos:{}, personEmails:{} };
+      data = (res && res.value) ? JSON.parse(res.value) : { tasks:[], people:[], clientes:[], vacaciones:[], vacAsignados:{}, vacVencimientos:{}, personEmails:{}, reportesAmazon:[] };
     } else {
       const raw = localStorage.getItem(LOCAL_FALLBACK_KEY);
-      data = raw ? JSON.parse(raw) : { tasks:[], people:[], clientes:[], vacaciones:[], vacAsignados:{}, vacVencimientos:{}, personEmails:{} };
+      data = raw ? JSON.parse(raw) : { tasks:[], people:[], clientes:[], vacaciones:[], vacAsignados:{}, vacVencimientos:{}, personEmails:{}, reportesAmazon:[] };
     }
   } catch(e){
-    data = { tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, personEmails }; // si falla la lectura, no perdemos lo que ya teníamos en pantalla
+    data = { tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, personEmails, reportesAmazon }; // si falla la lectura, no perdemos lo que ya teníamos en pantalla
   }
   if(!data.tasks) data.tasks = [];
   if(!data.people) data.people = [];
@@ -929,10 +1020,11 @@ async function _mutateDataInner(mutatorFn){
   if(!data.vacAsignados) data.vacAsignados = {};
   if(!data.vacVencimientos) data.vacVencimientos = {};
   if(!data.personEmails) data.personEmails = {};
+  if(!data.reportesAmazon) data.reportesAmazon = [];
 
   mutatorFn(data); // aplica SOLO el cambio que el usuario acaba de hacer
 
-  tasks = data.tasks; people = data.people; clientes = data.clientes; vacaciones = data.vacaciones; vacAsignados = data.vacAsignados; vacVencimientos = data.vacVencimientos; personEmails = data.personEmails;
+  tasks = data.tasks; people = data.people; clientes = data.clientes; vacaciones = data.vacaciones; vacAsignados = data.vacAsignados; vacVencimientos = data.vacVencimientos; personEmails = data.personEmails; reportesAmazon = data.reportesAmazon;
   const payload = JSON.stringify(data);
   try{
     if(hasSharedStorage){
@@ -1633,6 +1725,210 @@ $('vacList').addEventListener('click', async (e) => {
   }
 });
 
+const MESES_NOMBRES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+function amzMonthKey(fecha){
+  if(!fecha) return null;
+  return fecha.slice(0,7); // "YYYY-MM"
+}
+function amzMonthLabel(key){
+  const [y,m] = key.split('-');
+  return `${MESES_NOMBRES[parseInt(m)-1]} ${y}`;
+}
+
+function renderAmazon(){
+  $('amzMonthLabel').textContent = amzMonthFilter==='todos' ? 'Todos los reportes' : amzMonthLabel(amzMonthNav);
+  $('amzChipTodos').classList.toggle('active', amzMonthFilter==='todos');
+  $('amzMonthPrev').style.visibility = amzMonthFilter==='todos' ? 'hidden' : 'visible';
+  $('amzMonthNext').style.visibility = amzMonthFilter==='todos' ? 'hidden' : 'visible';
+
+  const list = reportesAmazon
+    .filter(r => amzMonthFilter==='todos' || amzMonthKey(r.fecha)===amzMonthNav)
+    .slice()
+    .sort((a,b) => (b.fecha||'').localeCompare(a.fecha||''));
+
+  $('amzEmpty').style.display = list.length ? 'none' : 'block';
+  $('amzEmpty').textContent = amzMonthFilter==='todos'
+    ? 'Aún no hay reportes registrados. Agrega el primero con "+ Nuevo reporte".'
+    : `Sin reportes en ${amzMonthLabel(amzMonthNav)}. Agrega uno con "+ Nuevo reporte", o muévete con las flechas a otro mes.`;
+
+  const table = $('amzTable');
+  const cols = ['Fecha','Tipo de solicitud','Case ID','Locker','Descripción','Ubicación','Ing. Asistió','Comentarios',''];
+  table.innerHTML = `
+    <thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+    <tbody>
+      ${list.map(r => `
+        <tr>
+          <td style="white-space:nowrap;">${r.fecha ? formatDate(r.fecha) : '—'}</td>
+          <td>${escapeHtml(r.tipo||'—')}</td>
+          <td style="font-family:'IBM Plex Mono';font-size:11.5px;">${escapeHtml(r.caseId||'—')}</td>
+          <td>${escapeHtml(r.locker||'—')}</td>
+          <td>${escapeHtml(r.descripcion||'—')}</td>
+          <td>${escapeHtml(r.ubicacion||'—')}</td>
+          <td>${r.ingAsistio ? `<span class="tag persona">${escapeHtml(r.ingAsistio)}</span>` : '—'}</td>
+          <td>${escapeHtml(r.comentarios||'—')}</td>
+          <td><div class="ctd-actions">
+            <button class="icon-btn" title="Editar" data-aaction="edit" data-id="${r.id}">✎</button>
+            <button class="icon-btn" title="Eliminar" data-aaction="delete" data-id="${r.id}">✕</button>
+          </div></td>
+        </tr>
+      `).join('')}
+    </tbody>
+  `;
+}
+
+function amzShiftMonth(delta){
+  const [y,m] = amzMonthNav.split('-').map(Number);
+  const d = new Date(y, m-1+delta, 1);
+  amzMonthNav = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+  amzMonthFilter = amzMonthNav;
+  render();
+}
+$('amzMonthPrev').addEventListener('click', () => amzShiftMonth(-1));
+$('amzMonthNext').addEventListener('click', () => amzShiftMonth(1));
+$('amzChipTodos').addEventListener('click', () => {
+  amzMonthFilter = amzMonthFilter==='todos' ? amzMonthNav : 'todos';
+  render();
+});
+
+function refreshAmzIngOptions(){
+  const sel = $('amzIng');
+  sel.innerHTML = '<option value="">— Ninguno —</option>' + people.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
+}
+function openAmzEditor(r){
+  refreshAmzIngOptions();
+  editingAmzId = r ? r.id : null;
+  $('amzEditorTitle').textContent = r ? 'Editar reporte' : 'Nuevo reporte Amazon';
+  $('amzFecha').value = r ? (r.fecha||'') : todayStr();
+  $('amzTipo').value = r ? (r.tipo||'') : 'Reporte';
+  $('amzCaseId').value = r ? (r.caseId||'') : '';
+  $('amzLocker').value = r ? (r.locker||'') : '';
+  $('amzUbicacion').value = r ? (r.ubicacion||'') : '';
+  $('amzIng').value = r ? (r.ingAsistio||'') : '';
+  $('amzDescripcion').value = r ? (r.descripcion||'') : '';
+  $('amzComentarios').value = r ? (r.comentarios||'') : '';
+  $('amzEditor').classList.add('open');
+  $('amzFecha').focus();
+}
+function closeAmzEditor(){ $('amzEditor').classList.remove('open'); editingAmzId = null; }
+
+$('btnAmzNew').addEventListener('click', () => openAmzEditor(null));
+$('btnAmzCancel').addEventListener('click', closeAmzEditor);
+$('btnAmzSave').addEventListener('click', async () => {
+  const fecha = $('amzFecha').value;
+  const caseId = $('amzCaseId').value.trim();
+  if(!fecha){ $('amzFecha').focus(); return; }
+  const newData = {
+    fecha,
+    tipo: $('amzTipo').value.trim(),
+    caseId,
+    locker: $('amzLocker').value.trim(),
+    ubicacion: $('amzUbicacion').value.trim(),
+    ingAsistio: $('amzIng').value,
+    descripcion: $('amzDescripcion').value.trim(),
+    comentarios: $('amzComentarios').value.trim(),
+  };
+  const idToEdit = editingAmzId;
+  closeAmzEditor();
+  await mutateData(data => {
+    if(!data.reportesAmazon) data.reportesAmazon = [];
+    if(idToEdit){
+      const r = data.reportesAmazon.find(r=>r.id===idToEdit);
+      if(r) Object.assign(r, newData); else data.reportesAmazon.push({ id: idToEdit, ...newData });
+    } else {
+      data.reportesAmazon.push({ id: Date.now(), ...newData });
+    }
+  });
+});
+$('amzTable').addEventListener('click', async (e) => {
+  const btn = e.target.closest('button[data-aaction]');
+  if(!btn) return;
+  const id = Number(btn.dataset.id);
+  if(btn.dataset.aaction === 'delete'){
+    const ok = await customConfirm('Eliminar reporte', '¿Eliminar este reporte de Amazon?');
+    if(ok){
+      await mutateData(data => { data.reportesAmazon = data.reportesAmazon.filter(r=>r.id!==id); });
+    }
+  } else if(btn.dataset.aaction === 'edit'){
+    openAmzEditor(reportesAmazon.find(r=>r.id===id));
+  }
+});
+
+$('btnAmzMail').addEventListener('click', async () => {
+  const list = reportesAmazon
+    .filter(r => amzMonthFilter==='todos' || amzMonthKey(r.fecha)===amzMonthFilter)
+    .slice().sort((a,b)=>(a.fecha||'').localeCompare(b.fecha||''));
+  if(!list.length){
+    await customAlert('Sin reportes', 'No hay reportes en este filtro para mandar.');
+    return;
+  }
+  const destino = await customPrompt('Enviar resumen', '¿A qué correo mandamos el resumen de estos ' + list.length + ' reportes?');
+  if(!destino || !destino.trim()) return;
+
+  const etiquetaMes = amzMonthFilter==='todos' ? 'Histórico completo' : amzMonthLabel(amzMonthFilter);
+  let rowsHtml = '';
+  list.forEach(r => {
+    rowsHtml += `
+      <tr>
+        <td style="padding:8px 10px;border-bottom:1px solid #e3e3e1;font-size:12px;">${r.fecha ? formatDate(r.fecha) : '—'}</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #e3e3e1;font-size:12px;">${escapeHtml(r.caseId||'—')}</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #e3e3e1;font-size:12px;">${escapeHtml(r.locker||'—')}</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #e3e3e1;font-size:12px;">${escapeHtml(r.descripcion||'—')}</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #e3e3e1;font-size:12px;">${escapeHtml(r.ubicacion||'—')}</td>
+        <td style="padding:8px 10px;border-bottom:1px solid #e3e3e1;font-size:12px;">${escapeHtml(r.ingAsistio||'—')}</td>
+      </tr>`;
+  });
+  const messageHtml = `
+    <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto;">
+      <div style="background:#e07b00;color:#fff;padding:14px 18px;border-radius:8px 8px 0 0;font-weight:700;font-size:13px;letter-spacing:.04em;">
+        📦 REPORTES AMAZON — RICOH GDL
+      </div>
+      <div style="border:1px solid #e3e3e1;border-top:none;border-radius:0 0 8px 8px;padding:20px 18px;">
+        <p style="font-family:Arial,sans-serif;font-size:13px;color:#6c6c70;margin:0 0 16px;">Resumen: <b>${etiquetaMes}</b> — ${list.length} reporte(s)</p>
+        <table style="width:100%;border-collapse:collapse;border:1px solid #e3e3e1;border-radius:8px;overflow:hidden;">
+          <tr style="background:#f2f2f1;">
+            <th style="padding:8px 10px;text-align:left;font-size:11px;">Fecha</th>
+            <th style="padding:8px 10px;text-align:left;font-size:11px;">Case ID</th>
+            <th style="padding:8px 10px;text-align:left;font-size:11px;">Locker</th>
+            <th style="padding:8px 10px;text-align:left;font-size:11px;">Descripción</th>
+            <th style="padding:8px 10px;text-align:left;font-size:11px;">Ubicación</th>
+            <th style="padding:8px 10px;text-align:left;font-size:11px;">Ing. Asistió</th>
+          </tr>
+          ${rowsHtml}
+        </table>
+        <p style="font-family:Arial,sans-serif;font-size:12px;color:#9d9da1;margin:20px 0 0;">
+          Panel de Seguimiento IT y Soluciones — Ricoh GDL
+        </p>
+      </div>
+    </div>
+  `;
+  const subject = `Reportes Amazon — ${etiquetaMes}`;
+
+  if(useEmailJS){
+    $('btnAmzMail').disabled = true;
+    $('btnAmzMail').textContent = '📧 Enviando...';
+    try{
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email: destino.trim(),
+        to_name: 'Equipo',
+        subject: subject,
+        message: `Resumen de reportes Amazon — ${etiquetaMes}`,
+        message_html: messageHtml,
+      });
+      await customAlert('Enviado ✅', 'El resumen ya se mandó a ' + destino.trim() + '.');
+    } catch(err){
+      console.error(err);
+      await customAlert('Error', 'No se pudo enviar. Intenta de nuevo o revisa tu conexión.');
+    } finally {
+      $('btnAmzMail').disabled = false;
+      $('btnAmzMail').textContent = '📧 Enviar resumen del mes';
+    }
+  } else {
+    const mailto = `mailto:${encodeURIComponent(destino.trim())}?subject=${encodeURIComponent(subject)}`;
+    window.open(mailto, '_blank');
+  }
+});
+
 function matchesSearch(t){
   if(!searchQuery) return true;
   const q = searchQuery.toLowerCase();
@@ -1673,18 +1969,22 @@ function render(){
   renderTabs();
   const inClientes = currentTab === 'clientes';
   const inVacaciones = currentTab === 'vacaciones';
-  $('navPendientes').classList.toggle('active', !inClientes && !inVacaciones);
+  const inAmazon = currentTab === 'amazon';
+  const otraSeccion = inClientes || inVacaciones || inAmazon;
+  $('navPendientes').classList.toggle('active', !otraSeccion);
   $('navClientes').classList.toggle('active', inClientes);
   $('navVacaciones').classList.toggle('active', inVacaciones);
-  $('sheetTabs').classList.toggle('show', !inClientes && !inVacaciones);
-  $('stripPendientes').style.display = (!inClientes && !inVacaciones) ? 'grid' : 'none';
+  $('navAmazon').classList.toggle('active', inAmazon);
+  $('sheetTabs').classList.toggle('show', !otraSeccion);
+  $('stripPendientes').style.display = (!otraSeccion) ? 'grid' : 'none';
   $('stripClientes').style.display = inClientes ? 'grid' : 'none';
-  $('dailyBanner').classList.toggle('show', $('dailyBanner').dataset.pending === '1' && !inClientes && !inVacaciones);
-  $('mainToolbar').style.display = inVacaciones ? 'none' : 'flex';
+  $('dailyBanner').classList.toggle('show', $('dailyBanner').dataset.pending === '1' && !otraSeccion);
+  $('mainToolbar').style.display = (inVacaciones || inAmazon) ? 'none' : 'flex';
   $('vacSection').style.display = inVacaciones ? 'block' : 'none';
-  $('queue').style.display = inVacaciones ? 'none' : 'flex';
+  $('amzSection').style.display = inAmazon ? 'block' : 'none';
+  $('queue').style.display = (inVacaciones || inAmazon) ? 'none' : 'flex';
   $('clientCharts').style.display = (inClientes && clientes.length) ? 'grid' : 'none';
-  const esPestañaPersona = !inClientes && !inVacaciones && currentTab !== 'pendientes';
+  const esPestañaPersona = !otraSeccion && currentTab !== 'pendientes';
   $('btnMailPerson').style.display = esPestañaPersona ? 'inline-block' : 'none';
   if(inVacaciones){
     $('editor').classList.remove('open');
@@ -1694,6 +1994,16 @@ function render(){
     renderVacaciones();
     return;
   }
+  if(inAmazon){
+    $('editor').classList.remove('open');
+    $('clientEditor').classList.remove('open');
+    $('vacEditor').classList.remove('open');
+    $('clientToolbar').style.display = 'none';
+    $('emptyState').style.display = 'none';
+    renderAmazon();
+    return;
+  }
+  $('amzEditor').classList.remove('open');
   $('searchBox').placeholder = inClientes ? 'Buscar cliente, solución o contacto...' : 'Buscar tarea o comentario...';
   $('btnNew').textContent = inClientes ? '+ Nuevo cliente' : '+ Nuevo pendiente';
   const queue = $('queue');
@@ -1969,6 +2279,7 @@ $('queue').addEventListener('change', async (e) => {
 $('navPendientes').addEventListener('click', () => { currentTab = 'pendientes'; render(); });
 $('navClientes').addEventListener('click', () => { currentTab = 'clientes'; render(); });
 $('navVacaciones').addEventListener('click', () => { currentTab = 'vacaciones'; render(); });
+$('navAmazon').addEventListener('click', () => { currentTab = 'amazon'; render(); });
 $('viewCards').addEventListener('click', () => { clientView = 'cards'; render(); });
 $('viewTable').addEventListener('click', () => { clientView = 'table'; render(); });
 
@@ -2071,7 +2382,7 @@ $('btnMailPerson').addEventListener('click', async () => {
 });
 
 $('btnExport').addEventListener('click', () => {
-  const payload = JSON.stringify({ tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, personEmails }, null, 2);
+  const payload = JSON.stringify({ tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, personEmails, reportesAmazon }, null, 2);
   $('backupText').value = payload;
   $('backupModal').classList.add('open');
   setTimeout(() => { $('backupText').focus(); $('backupText').select(); }, 50);
@@ -2107,6 +2418,7 @@ $('btnImportApply').addEventListener('click', async () => {
       data.vacAsignados = parsed.vacAsignados || {};
       data.vacVencimientos = parsed.vacVencimientos || {};
       data.personEmails = parsed.personEmails || {};
+      data.reportesAmazon = parsed.reportesAmazon || [];
     });
     $('importModal').classList.remove('open');
     await customAlert('Listo', 'Respaldo cargado correctamente.');
@@ -2149,6 +2461,22 @@ async function checkDailyBanner(){
   $('dailyBanner').dataset.pending = '1';
   render();
 }
+
+$('btnSeedNow').addEventListener('click', async () => {
+  const ok = await requireVacAdmin();
+  if(!ok) return;
+  const confirmado = await customConfirm(
+    '⚠️ Confirmar siembra',
+    'Esto va a escribir datos base VACÍOS/de ejemplo en Firebase. Solo hazlo si estás 100% seguro de que esto es una instalación nueva y no hay información real que se vaya a perder. ¿Continuar?'
+  );
+  if(!confirmado) return;
+  try{
+    await fbDocRef.set({ tasks:[], people: SEED.people, clientes:[], vacaciones:[], vacAsignados:{}, vacVencimientos:{}, personEmails:{}, reportesAmazon:[] });
+    $('fbMissingBanner').classList.remove('show');
+  } catch(e){
+    await customAlert('Error', 'No se pudo escribir en Firebase: ' + e.message);
+  }
+});
 
 $('dailyBannerClose').addEventListener('click', async () => {
   $('dailyBanner').dataset.pending = '0';
