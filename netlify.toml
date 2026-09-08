@@ -4,3 +4,10 @@
 
 [functions]
   node_bundler = "esbuild"
+
+# Evita que el navegador de alguien se quede pegado con una versión vieja
+# del código (que podría tener bugs ya corregidos). Siempre trae la más nueva.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
