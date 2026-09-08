@@ -478,6 +478,7 @@
       <button class="btn-refresh" id="btnMailPerson" style="display:none;" title="Armar correo con los pendientes de esta persona">📧 Enviar correo</button>
       <button class="btn-refresh" id="btnExport" title="Ver y copiar un respaldo de tus datos">⬇ Respaldo</button>
       <button class="btn-refresh" id="btnImport" title="Pegar un respaldo guardado">⬆ Cargar</button>
+      <button class="btn-refresh" id="btnRestoreAuto" title="Restaurar uno de los respaldos automáticos diarios">🕐 Respaldos automáticos</button>
       <button class="btn-refresh" id="btnRefresh" title="Traer los cambios de los demás">⟳ Actualizar</button>
       <button class="btn-new" id="btnNew">+ Nuevo pendiente</button>
     </div>
@@ -2424,6 +2425,40 @@ $('btnImportApply').addEventListener('click', async () => {
     await customAlert('Listo', 'Respaldo cargado correctamente.');
   } catch(err){
     await customAlert('Error', 'No pude leer ese texto. ¿Seguro que pegaste el respaldo completo?');
+  }
+});
+
+$('btnRestoreAuto').addEventListener('click', async () => {
+  if(!useFirebase){
+    await customAlert('No disponible', 'Los respaldos automáticos solo funcionan conectado a Firebase.');
+    return;
+  }
+  const ok = await requireVacAdmin();
+  if(!ok) return;
+  try{
+    const snap = await db.collection('ricoh-gdl-backups').orderBy(firebase.firestore.FieldPath.documentId(), 'desc').limit(15).get();
+    if(snap.empty){
+      await customAlert('Sin respaldos', 'Todavía no hay respaldos automáticos guardados (se generan una vez al día). Vuelve a intentar mañana, o usa "⬇ Respaldo" / "⬆ Cargar" mientras tanto.');
+      return;
+    }
+    const fechas = snap.docs.map(d => d.id);
+    const eleccion = await customPrompt('Restaurar respaldo automático',
+      `Fechas disponibles (la más reciente primero):\n${fechas.join('\n')}\n\nEscribe la fecha exacta que quieres restaurar:`);
+    if(!eleccion || !fechas.includes(eleccion.trim())) {
+      if(eleccion) await customAlert('Fecha no válida', 'Esa fecha no está en la lista de respaldos disponibles.');
+      return;
+    }
+    const backupDoc = snap.docs.find(d => d.id === eleccion.trim());
+    const backupData = backupDoc.data();
+    const confirmar = await customConfirm('Confirmar restauración',
+      `El respaldo del ${eleccion.trim()} tiene ${(backupData.tasks||[]).length} pendientes, ${(backupData.clientes||[]).length} clientes y ${(backupData.reportesAmazon||[]).length} reportes Amazon.\n\n¿Reemplazar TODO lo que hay ahora mismo con esta versión? Esto no se puede deshacer.`);
+    if(!confirmar) return;
+    delete backupData._respaldadoEn;
+    await fbDocRef.set(backupData);
+    await customAlert('Listo', 'Se restauró el respaldo del ' + eleccion.trim() + '.');
+  } catch(err){
+    console.error(err);
+    await customAlert('Error', 'No se pudo leer los respaldos automáticos: ' + err.message);
   }
 });
 
