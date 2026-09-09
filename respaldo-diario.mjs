@@ -27,16 +27,17 @@ export default async () => {
     });
 
     // Limpieza: borra respaldos de más de 45 días para no acumular basura
+    // (se trae todo y se filtra en JS, para no necesitar un índice compuesto en Firestore)
     const limite = new Date();
     limite.setDate(limite.getDate() - 45);
     const limiteStr = limite.toISOString().slice(0, 10);
-    const viejos = await db.collection('ricoh-gdl-backups')
-      .where(admin.firestore.FieldPath.documentId(), '<', limiteStr)
-      .get();
+    const todos = await db.collection('ricoh-gdl-backups').get();
     const borrados = [];
-    for (const doc of viejos.docs) {
-      await doc.ref.delete();
-      borrados.push(doc.id);
+    for (const doc of todos.docs) {
+      if (doc.id < limiteStr) {
+        await doc.ref.delete();
+        borrados.push(doc.id);
+      }
     }
 
     const resumen = `Respaldo guardado: ricoh-gdl-backups/${fechaHoy} (${(data.tasks||[]).length} pendientes, ${(data.clientes||[]).length} clientes, ${(data.reportesAmazon||[]).length} reportes Amazon). Respaldos viejos borrados: ${borrados.length ? borrados.join(', ') : 'ninguno'}.`;
