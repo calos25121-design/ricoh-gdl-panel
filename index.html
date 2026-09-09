@@ -2436,12 +2436,12 @@ $('btnRestoreAuto').addEventListener('click', async () => {
   const ok = await requireVacAdmin();
   if(!ok) return;
   try{
-    const snap = await db.collection('ricoh-gdl-backups').orderBy(firebase.firestore.FieldPath.documentId(), 'desc').limit(15).get();
+    const snap = await db.collection('ricoh-gdl-backups').get();
     if(snap.empty){
       await customAlert('Sin respaldos', 'Todavía no hay respaldos automáticos guardados (se generan una vez al día). Vuelve a intentar mañana, o usa "⬇ Respaldo" / "⬆ Cargar" mientras tanto.');
       return;
     }
-    const fechas = snap.docs.map(d => d.id);
+    const fechas = snap.docs.map(d => d.id).sort().reverse().slice(0, 15);
     const eleccion = await customPrompt('Restaurar respaldo automático',
       `Fechas disponibles (la más reciente primero):\n${fechas.join('\n')}\n\nEscribe la fecha exacta que quieres restaurar:`);
     if(!eleccion || !fechas.includes(eleccion.trim())) {
