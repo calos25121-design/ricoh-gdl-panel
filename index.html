@@ -337,6 +337,56 @@
   }
   .modal-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:12px; }
 
+  /* ===== MI DÍA ===== */
+  .section-btn.midia-btn.active{ color:#b9760a; }
+  .md-picker{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:28px 22px; text-align:center; }
+  .md-chips{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:16px; }
+  .md-chip{ display:flex; align-items:center; gap:7px; background:var(--surface-2); border:1px solid var(--line); border-radius:999px; padding:9px 16px; font-family:'Space Grotesk'; font-weight:600; font-size:14px; cursor:pointer; color:var(--text); }
+  .md-chip:hover{ border-color:var(--red); color:var(--red); }
+  .md-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+  .md-hello{ font-family:'Space Grotesk'; font-weight:700; font-size:22px; }
+  .md-sub{ font-size:12.5px; color:var(--text-dim); margin-top:3px; text-transform:none; }
+  .md-sub::first-letter{ text-transform:uppercase; }
+  .md-change{ color:var(--text-faint); }
+  .md-kpis{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:16px; }
+  .md-kpi{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; display:flex; flex-direction:column; }
+  .md-kpi b{ font-family:'Space Grotesk'; font-size:26px; line-height:1; }
+  .md-kpi span{ font-family:'IBM Plex Mono'; font-size:10px; color:var(--text-faint); text-transform:uppercase; margin-top:5px; }
+  .md-kpi.alert b{ color:var(--red); } .md-kpi.soon b{ color:var(--amber); } .md-kpi.done b{ color:var(--green); }
+  .md-grid{ display:grid; grid-template-columns:minmax(0,1fr) 280px; gap:16px; align-items:start; }
+  .md-block{ margin-bottom:16px; }
+  .md-block-title{ font-family:'Space Grotesk'; font-weight:700; font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+  .md-toggle{ cursor:pointer; color:var(--text-dim); }
+  .md-count{ font-family:'IBM Plex Mono'; font-size:11px; background:var(--surface-2); border-radius:999px; padding:1px 8px; color:var(--text-dim); font-weight:500; }
+  .b-alert .md-count{ background:var(--red-dim); color:var(--red); }
+  .b-soon .md-count{ background:var(--amber-dim); color:var(--amber); }
+  .md-list{ display:flex; flex-direction:column; gap:8px; }
+  .md-empty{ font-size:12.5px; color:var(--text-faint); padding:10px 12px; border:1px dashed var(--line); border-radius:8px; }
+  .md-side{ display:flex; flex-direction:column; gap:10px; }
+  .md-card{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .md-card-title{ font-family:'Space Grotesk'; font-weight:700; font-size:13px; margin-bottom:8px; }
+  .md-card .md-empty{ border:none; padding:2px 0; }
+  .md-row{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding:6px 0; border-top:1px solid var(--line); font-size:12.5px; }
+  .md-row:first-of-type{ border-top:none; }
+  .md-row small{ display:block; font-size:10.5px; color:var(--text-faint); font-family:'IBM Plex Mono'; }
+  .md-row .neg{ color:var(--red); }
+  @media(max-width:760px){ .md-grid{ grid-template-columns:1fr; } }
+
+  /* ===== CELULAR: sin desbordes horizontales ===== */
+  @media(max-width:600px){
+    body{ padding:20px 16px 100px; }
+    .section-nav{ width:100%; overflow-x:auto; scrollbar-width:none; }
+    .section-nav::-webkit-scrollbar{ display:none; }
+    .section-btn{ padding:8px 11px; font-size:12.5px; white-space:nowrap; flex-shrink:0; }
+    .toolbar-right{ flex-wrap:wrap; width:100%; }
+    .toolbar-right .btn-new{ flex:1 0 100%; order:-1; }
+    .search-box{ max-width:none; width:100%; }
+    .vac-year-nav{ flex-wrap:wrap; }
+    .vac-card{ min-width:0; }
+    .md-kpis{ grid-template-columns:repeat(2,1fr); }
+    .md-head .btn-new{ width:100%; }
+  }
+
   /* ===== VACACIONES ===== */
   .vac-year-nav{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
   .vac-year-btn{ background:var(--surface); border:1px solid var(--line); border-radius:7px; width:32px; height:32px; cursor:pointer; color:var(--text-dim); font-size:14px; }
@@ -344,7 +394,28 @@
   .vac-year-label{ font-family:'Space Grotesk'; font-weight:700; font-size:17px; }
 
   .vac-summary{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:22px; }
-  .vac-card{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; min-width:160px; flex:1; }
+  .vac-card{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; min-width:250px; flex:1; display:flex; flex-direction:column; }
+  .vac-card-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+  .vac-big{ display:flex; flex-direction:column; align-items:flex-end; line-height:1; }
+  .vac-big span{ font-family:'Space Grotesk'; font-weight:700; font-size:26px; color:var(--green); }
+  .vac-big.neg span{ color:var(--red); }
+  .vac-big small{ font-family:'IBM Plex Mono'; font-size:9px; color:var(--text-faint); text-transform:uppercase; margin-top:3px; }
+  .vac-card-meta{ display:flex; flex-wrap:wrap; gap:4px; font-size:11.5px; color:var(--text-dim); margin:4px 0 10px; }
+  .vac-periodos{ display:flex; flex-direction:column; gap:6px; flex:1; }
+  .vac-periodo{ border:1px solid var(--line); border-left:3px solid var(--green); border-radius:6px; padding:6px 8px; font-size:11.5px; }
+  .vac-periodo.vencido{ border-left-color:var(--text-faint); opacity:.65; }
+  .vac-periodo.futuro{ border-left-color:var(--amber); }
+  .vp-main{ display:flex; justify-content:space-between; gap:6px; flex-wrap:wrap; }
+  .vp-label{ font-family:'Space Grotesk'; font-weight:600; }
+  .vp-nums{ font-family:'IBM Plex Mono'; font-size:11px; color:var(--text-dim); }
+  .vp-nums b{ color:var(--text); }
+  .vp-nums b.neg{ color:var(--red); }
+  .vp-sub{ display:flex; align-items:center; justify-content:space-between; color:var(--text-faint); font-size:10.5px; margin-top:2px; gap:6px; }
+  .vp-actions{ display:flex; gap:2px; }
+  .vp-actions .icon-btn{ width:22px; height:22px; font-size:11px; }
+  .vac-periodo-vacio{ font-size:11.5px; color:var(--text-faint); padding:6px 0; }
+  .vac-add-periodo{ margin-top:10px; background:transparent; border:1px dashed var(--line); border-radius:7px; padding:7px; font-size:12px; color:var(--text-dim); cursor:pointer; }
+  .vac-add-periodo:hover{ border-color:var(--red); color:var(--red); }
   .vac-card-name{ font-family:'Space Grotesk'; font-weight:700; font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:7px; }
   .vac-dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
   .vac-stats{ display:flex; gap:14px; }
@@ -362,12 +433,13 @@
   .vc-pronto{ color:var(--amber); font-weight:600; font-family:'IBM Plex Mono'; font-size:11.5px; }
   .vd-g0-text{ color:var(--green); font-family:'IBM Plex Mono'; font-size:11.5px; }
 
-  .vac-calendar-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:7px; margin-bottom:24px; }
-  .vac-month{ background:var(--surface); border:1px solid var(--line); border-radius:7px; padding:6px; }
-  .vac-month-title{ font-family:'Space Grotesk'; font-weight:600; font-size:9px; margin-bottom:4px; text-align:center; }
-  .vac-days-table{ width:100%; border-collapse:collapse; table-layout:fixed; }
-  .vac-days-table th{ font-family:'IBM Plex Mono'; font-size:6px; color:var(--text-faint); font-weight:400; padding-bottom:2px; }
-  .vac-days-table td{ text-align:center; font-size:6.5px; color:var(--text-dim); border-radius:2px; padding:1.5px 0; }
+  .vac-calendar-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(210px, 1fr)); gap:10px; margin-bottom:24px; }
+  .vac-month{ background:var(--surface); border:1px solid var(--line); border-radius:9px; padding:10px; }
+  .vac-month-title{ font-family:'Space Grotesk'; font-weight:600; font-size:13px; margin-bottom:6px; text-align:center; }
+  .vac-days-table{ width:100%; border-collapse:separate; border-spacing:2px; table-layout:fixed; }
+  .vac-days-table th{ font-family:'IBM Plex Mono'; font-size:10px; color:var(--text-faint); font-weight:400; padding-bottom:2px; }
+  .vac-days-table td{ text-align:center; font-size:11.5px; color:var(--text-dim); border-radius:4px; padding:4px 0; font-family:'IBM Plex Mono'; cursor:default; }
+  .vac-days-table td.vd-feriado{ background:#e8e6f5; color:#5b4fa8; }
   .vac-days-table td.vd-empty{ visibility:hidden; }
   .vac-days-table td.vd-weekend{ color:var(--text-faint); background:transparent; }
   .vac-days-table td.vd-g0{ background:#dff5e6; color:#1f6b3a; }
@@ -440,6 +512,7 @@
   </header>
 
   <div class="section-nav">
+    <button class="section-btn midia-btn" id="navMiDia">☀️ Mi día</button>
     <button class="section-btn" id="navPendientes">📋 Pendientes</button>
     <button class="section-btn clientes-btn" id="navClientes">🏢 Clientes</button>
     <button class="section-btn vac-btn" id="navVacaciones">🏖️ Vacaciones</button>
@@ -597,9 +670,41 @@
       <label>Notas (opcional)</label>
       <input type="text" id="vNotas" placeholder="Ej. Viaje familiar">
     </div>
+    <div style="margin-top:10px;">
+      <label>Descontar de</label>
+      <select id="vPeriodo"></select>
+    </div>
     <div class="editor-actions">
       <button class="btn-ghost" id="btnVacCancel">Cancelar</button>
       <button class="btn-save" id="btnVacSave">Guardar</button>
+    </div>
+  </div>
+
+  <div class="editor" id="vacPeriodoEditor">
+    <h3 id="periodoEditorTitle">Agregar días de vacaciones</h3>
+    <input type="hidden" id="pPersona">
+    <div class="form-grid three">
+      <div>
+        <label>Días nuevos</label>
+        <input type="number" id="pDias" min="0" placeholder="Ej. 14">
+      </div>
+      <div>
+        <label>A partir de (aniversario)</label>
+        <input type="date" id="pInicio">
+      </div>
+      <div>
+        <label>Vencen</label>
+        <input type="date" id="pVence">
+      </div>
+    </div>
+    <div>
+      <label>Notas (opcional)</label>
+      <input type="text" id="pNotas" placeholder="Ej. 3er año de antigüedad">
+    </div>
+    <div id="periodoHint" style="font-size:12px;color:var(--text-dim);margin-top:8px;"></div>
+    <div class="editor-actions">
+      <button class="btn-ghost" id="btnPeriodoCancel">Cancelar</button>
+      <button class="btn-save" id="btnPeriodoSave">Guardar</button>
     </div>
   </div>
 
@@ -616,6 +721,7 @@
       <span><i style="background:#fdf0c6;"></i>1 persona de vacaciones</span>
       <span><i style="background:#fbdada;"></i>2+ personas de vacaciones</span>
       <span><i style="background:var(--surface-2);border:1px solid var(--line);"></i>Sábado / domingo (no cuenta)</span>
+      <span><i style="background:#e8e6f5;border:1px solid #c9c4ea;"></i>Festivo oficial (no cuenta)</span>
     </div>
     <div class="vac-calendar-grid" id="vacCalendar"></div>
     <div class="vac-list" id="vacList"></div>
@@ -678,6 +784,7 @@
     <div class="empty" id="amzEmpty" style="display:none;"></div>
   </div>
 
+  <div id="miDiaSection" style="display:none;"></div>
   <div class="queue" id="queue"></div>
   <div class="charts-grid" id="clientCharts" style="display:none;"></div>
   <div class="empty" id="emptyState" style="display:none;"></div>
@@ -788,12 +895,17 @@ let clientes = [];
 let vacaciones = [];
 let vacAsignados = {};
 let vacVencimientos = {};
+let vacPeriodos = null; // null = aún no migrado; [] = migrado sin periodos
 let personEmails = {};
 let reportesAmazon = [];
 let editingId = null;
 let editingClientId = null;
 let editingVacId = null;
-let currentTab = 'pendientes';
+let currentTab = 'midia'; // la app abre en "Mi día"
+const MI_PERSONA_KEY = 'ricoh-mi-persona';
+function getMiPersona(){ try{ return localStorage.getItem(MI_PERSONA_KEY) || ''; }catch(e){ return ''; } }
+function setMiPersona(p){ try{ if(p) localStorage.setItem(MI_PERSONA_KEY, p); else localStorage.removeItem(MI_PERSONA_KEY); }catch(e){} }
+let miDiaSinFechaOpen = false;
 let doneOpen = false;
 let searchQuery = '';
 let clientView = 'table'; // 'cards' | 'table'
@@ -802,9 +914,11 @@ let clientSort = { key:'vencimiento', dir:1 };
 let columnFilters = {}; // { colKey: Set(valoresPermitidos) } — vacío/ausente = sin filtro
 let openFilterCol = null;
 let vacYear = new Date().getFullYear();
-let amzMonthNav = new Date().toISOString().slice(0,7); // "YYYY-MM", empieza en el mes actual
+let amzMonthNav = (() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; })(); // "YYYY-MM", empieza en el mes actual
 let amzMonthFilter = amzMonthNav; // 'todos' o "YYYY-MM"
 let editingAmzId = null;
+let editingPeriodoId = null;
+let _primerSnapshot = true;
 const VAC_COLORS = ['#D1001F','#1f8a4c','#2f6fdb','#b9760a','#7b4fbf','#0aa6a6','#c2185b','#5d6b7a'];
 const VAC_ADMIN_PIN = '2026';
 let vacAdminUnlocked = false;
@@ -830,9 +944,12 @@ async function loadData(){
         vacVencimientos = parsed.vacVencimientos || {};
         personEmails = parsed.personEmails || {};
         reportesAmazon = parsed.reportesAmazon || [];
+        vacPeriodos = Array.isArray(parsed.vacPeriodos) ? parsed.vacPeriodos : null;
         setSync('ok', 'Sincronizado');
         await runMigrations();
         render();
+        // El aviso diario se calcula hasta que llegan los datos reales (antes salía con 0 pendientes)
+        if(_primerSnapshot){ _primerSnapshot = false; checkDailyBanner(); }
       } else {
         // El documento no aparece en Firestore. ANTES esto sobrescribía todo
         // con datos viejos automáticamente — eso causó una pérdida de información real.
@@ -861,6 +978,7 @@ async function loadData(){
         vacVencimientos = parsed.vacVencimientos || {};
         personEmails = parsed.personEmails || {};
         reportesAmazon = parsed.reportesAmazon || [];
+        vacPeriodos = Array.isArray(parsed.vacPeriodos) ? parsed.vacPeriodos : null;
       } else {
         tasks = SEED.tasks; people = SEED.people; clientes = SEED.clientes; vacaciones = SEED.vacaciones; vacAsignados = SEED.vacAsignados; vacVencimientos = SEED.vacVencimientos; personEmails = SEED.personEmails; reportesAmazon = SEED.reportesAmazon;
         await persist();
@@ -871,7 +989,7 @@ async function loadData(){
     }
   } else {
     const raw = localStorage.getItem(LOCAL_FALLBACK_KEY);
-    if(raw){ const p = JSON.parse(raw); tasks = p.tasks; people = p.people; clientes = p.clientes || []; vacaciones = p.vacaciones || []; vacAsignados = p.vacAsignados || {}; vacVencimientos = p.vacVencimientos || {}; personEmails = p.personEmails || {}; reportesAmazon = p.reportesAmazon || []; }
+    if(raw){ const p = JSON.parse(raw); tasks = p.tasks; people = p.people; clientes = p.clientes || []; vacaciones = p.vacaciones || []; vacAsignados = p.vacAsignados || {}; vacVencimientos = p.vacVencimientos || {}; personEmails = p.personEmails || {}; reportesAmazon = p.reportesAmazon || []; vacPeriodos = Array.isArray(p.vacPeriodos) ? p.vacPeriodos : null; }
     else {
       tasks = SEED.tasks; people = SEED.people; clientes = SEED.clientes; vacaciones = SEED.vacaciones; vacAsignados = SEED.vacAsignados; vacVencimientos = SEED.vacVencimientos; personEmails = SEED.personEmails; reportesAmazon = SEED.reportesAmazon;
       try{ await persist(); }catch(e2){}
@@ -880,9 +998,31 @@ async function loadData(){
   await runMigrations();
   setSync('ok', 'Sincronizado');
   render();
+  checkDailyBanner();
+}
+
+// Convierte los "Asignados" y "Vencen" viejos en un primer periodo por persona.
+// NO borra vacAsignados / vacVencimientos (se quedan como estaban, por seguridad).
+function construirPeriodosIniciales(data){
+  const out = [];
+  const anioActual = new Date().getFullYear();
+  (data.people || []).forEach((persona, i) => {
+    const dias = (data.vacAsignados || {})[persona] || 0;
+    const vence = (data.vacVencimientos || {})[persona] || '';
+    if(!dias && !vence) return;
+    const inicio = vence ? sumarAnios(vence, -1) : `${anioActual}-01-01`;
+    out.push({ id: Date.now() + i, persona, dias, inicio, vence, notas: 'Migrado del saldo anterior' });
+  });
+  return out;
 }
 
 async function runMigrations(){
+  if(vacPeriodos === null){
+    await mutateData(data => {
+      if(Array.isArray(data.vacPeriodos)) return; // alguien más ya lo migró
+      data.vacPeriodos = construirPeriodosIniciales(data);
+    });
+  }
   const correosBase = {
     'Luquin': 'carlos.luquin@aldaramiz.com',
     'Juan Jimenez': 'juan.jimenez@aldaramiz.com',
@@ -939,7 +1079,7 @@ async function runMigrations(){
 
 async function persist(){
   setSync('busy', 'Guardando...');
-  const payload = JSON.stringify({ tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, personEmails, reportesAmazon });
+  const payload = JSON.stringify({ tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, vacPeriodos, personEmails, reportesAmazon });
   if(hasSharedStorage){
     try{
       await window.storage.set(STORAGE_KEY, payload, true);
@@ -1012,7 +1152,7 @@ async function _mutateDataInner(mutatorFn){
       data = raw ? JSON.parse(raw) : { tasks:[], people:[], clientes:[], vacaciones:[], vacAsignados:{}, vacVencimientos:{}, personEmails:{}, reportesAmazon:[] };
     }
   } catch(e){
-    data = { tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, personEmails, reportesAmazon }; // si falla la lectura, no perdemos lo que ya teníamos en pantalla
+    data = { tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, vacPeriodos: vacPeriodos || undefined, personEmails, reportesAmazon }; // si falla la lectura, no perdemos lo que ya teníamos en pantalla
   }
   if(!data.tasks) data.tasks = [];
   if(!data.people) data.people = [];
@@ -1026,6 +1166,7 @@ async function _mutateDataInner(mutatorFn){
   mutatorFn(data); // aplica SOLO el cambio que el usuario acaba de hacer
 
   tasks = data.tasks; people = data.people; clientes = data.clientes; vacaciones = data.vacaciones; vacAsignados = data.vacAsignados; vacVencimientos = data.vacVencimientos; personEmails = data.personEmails; reportesAmazon = data.reportesAmazon;
+  vacPeriodos = Array.isArray(data.vacPeriodos) ? data.vacPeriodos : null;
   const payload = JSON.stringify(data);
   try{
     if(hasSharedStorage){
@@ -1051,7 +1192,13 @@ function mutateData(mutatorFn){
   return next;
 }
 
-function todayStr(){ return new Date().toISOString().slice(0,10); }
+function ymd(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function todayStr(){ return ymd(new Date()); } // fecha LOCAL (CDMX), no UTC
+function sumarAnios(dateStr, n){
+  const [y,m,d] = dateStr.split('-').map(Number);
+  const dt = new Date(y + n, m - 1, d);
+  return ymd(dt);
+}
 function daysUntil(dateStr){
   if(!dateStr) return null;
   const today = new Date(todayStr()+'T00:00:00');
@@ -1093,7 +1240,7 @@ function updateCounts(){
   $('cntClientesTotal').textContent = clientes.length;
   $('cntLicVencidas').textContent = licVencidas;
   $('cntLicProximas').textContent = licProximas;
-  $('cntLicOk').textContent = clientes.length - licVencidas - licProximas;
+  $('cntLicOk').textContent = clientes.filter(c => c.vencimiento && daysUntil(c.vencimiento) > 15).length;
 
   const alertList = [...vencidos, ...hoy];
   const clientAlerts = clientes.filter(c => c.vencimiento && daysUntil(c.vencimiento) <= 15);
@@ -1109,7 +1256,7 @@ function updateCounts(){
       const stamp = stampFor(t);
       const item = document.createElement('div');
       item.className = 'bell-item';
-      item.innerHTML = `<div class="bell-item-title">${escapeHtml(t.title)}</div><div class="bell-item-meta">${t.persona} · ${stamp.text}</div>`;
+      item.innerHTML = `<div class="bell-item-title">${escapeHtml(t.title)}</div><div class="bell-item-meta">${escapeHtml(t.persona)} · ${stamp.text}</div>`;
       item.addEventListener('click', () => { currentTab = t.persona; $('bellPanel').classList.remove('open'); render(); });
       bellList.appendChild(item);
     });
@@ -1135,8 +1282,8 @@ function sortTasks(list){
 
 function escapeHtml(str){
   const div = document.createElement('div');
-  div.textContent = str || '';
-  return div.innerHTML;
+  div.textContent = (str === 0 ? '0' : (str || ''));
+  return div.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 function showGenericModal({title, message='', withInput=false, inputValue='', okLabel='Aceptar', hideCancel=false, danger=false}){
@@ -1267,10 +1414,12 @@ function uniqueColumnValues(key){
 
 function sortArrow(key){ return clientSort.key === key ? (clientSort.dir === 1 ? ' ↑' : ' ↓') : ''; }
 
+let _colFilterOutsideHandler = null;
 function closeColFilterPanel(){
   const existing = document.getElementById('colFilterPanel');
   if(existing) existing.remove();
   openFilterCol = null;
+  if(_colFilterOutsideHandler){ document.removeEventListener('click', _colFilterOutsideHandler); _colFilterOutsideHandler = null; }
 }
 
 function openColFilterPanel(key, anchorEl){
@@ -1319,12 +1468,10 @@ function openColFilterPanel(key, anchorEl){
 
   document.body.appendChild(panel);
   setTimeout(() => {
-    document.addEventListener('click', function handler(e){
-      if(!panel.contains(e.target) && e.target !== anchorEl){
-        closeColFilterPanel();
-        document.removeEventListener('click', handler);
-      }
-    });
+    _colFilterOutsideHandler = (e) => {
+      if(!panel.contains(e.target) && e.target !== anchorEl) closeColFilterPanel();
+    };
+    document.addEventListener('click', _colFilterOutsideHandler);
   }, 0);
 }
 
@@ -1491,7 +1638,85 @@ function personaColor(persona){
 
 function isBusinessDay(date){
   const d = date.getDay();
-  return d !== 0 && d !== 6;
+  return d !== 0 && d !== 6 && !esFeriado(ymd(date));
+}
+
+// Días de descanso obligatorio en México (Ley Federal del Trabajo, art. 74).
+// No se descuentan como vacaciones.
+function nLunes(year, month, n){ // month 0-11
+  const d = new Date(year, month, 1);
+  const delta = (8 - d.getDay()) % 7; // días hasta el primer lunes
+  return ymd(new Date(year, month, 1 + delta + 7*(n-1)));
+}
+const _feriadosCache = {};
+function feriadosMX(year){
+  if(_feriadosCache[year]) return _feriadosCache[year];
+  const m = new Map();
+  m.set(`${year}-01-01`, 'Año Nuevo');
+  m.set(nLunes(year,1,1), 'Día de la Constitución');
+  m.set(nLunes(year,2,3), 'Natalicio de Benito Juárez');
+  m.set(`${year}-05-01`, 'Día del Trabajo');
+  m.set(`${year}-09-16`, 'Día de la Independencia');
+  if((year - 2024) % 6 === 0) m.set(`${year}-10-01`, 'Transmisión del Poder Ejecutivo');
+  m.set(nLunes(year,10,3), 'Día de la Revolución');
+  m.set(`${year}-12-25`, 'Navidad');
+  _feriadosCache[year] = m;
+  return m;
+}
+function esFeriado(dateStr){ return feriadosMX(parseInt(dateStr.slice(0,4))).has(dateStr); }
+function nombreFeriado(dateStr){ return feriadosMX(parseInt(dateStr.slice(0,4))).get(dateStr) || ''; }
+
+// Lista de días hábiles (lun-vie, sin festivos) entre dos fechas, inclusive
+function diasHabilesLista(inicio, fin){
+  const out = [];
+  if(!inicio || !fin) return out;
+  for(let d = new Date(inicio+'T00:00:00'); d <= new Date(fin+'T00:00:00'); d.setDate(d.getDate()+1)){
+    if(isBusinessDay(d)) out.push(ymd(d));
+  }
+  return out;
+}
+
+// ===== Periodos de vacaciones (cada aniversario = un periodo nuevo) =====
+// Reparte los días tomados entre los periodos: primero se gastan los del periodo más viejo
+// que siga vigente en ese día. Si el registro tiene "periodoId", se descuenta de ese periodo.
+function calcularSaldosPersona(persona){
+  const hoy = todayStr();
+  const info = (vacPeriodos || []).filter(p => p.persona === persona)
+    .slice().sort((a,b) => (a.inicio||'').localeCompare(b.inicio||''))
+    .map(p => ({ p, tomados:0 }));
+  const byId = {}; info.forEach(i => byId[i.p.id] = i);
+  let anteriores = 0, sinPeriodo = 0;
+  const primerInicio = info.length ? info[0].p.inicio : null;
+  vacaciones.filter(v => v.persona === persona)
+    .slice().sort((a,b) => (a.inicio||'').localeCompare(b.inicio||''))
+    .forEach(v => {
+      const dias = diasHabilesLista(v.inicio, v.fin);
+      if(v.periodoId && byId[v.periodoId]){ byId[v.periodoId].tomados += dias.length; return; }
+      dias.forEach(d => {
+        if(!info.length){ sinPeriodo++; return; }
+        if(d < primerInicio){ anteriores++; return; } // antes de que existieran periodos: no se descuenta
+        let target = info.find(i => i.p.inicio <= d && (!i.p.vence || d <= i.p.vence) && i.tomados < (Number(i.p.dias)||0));
+        if(!target){ // sin saldo vigente: se carga al periodo más reciente ya iniciado (queda en negativo = aviso)
+          const iniciados = info.filter(i => i.p.inicio <= d);
+          target = iniciados[iniciados.length - 1];
+        }
+        target.tomados++;
+      });
+    });
+  info.forEach(i => {
+    i.restan = (Number(i.p.dias)||0) - i.tomados;
+    i.vencido = !!(i.p.vence && i.p.vence < hoy);
+    i.futuro = !!(i.p.inicio && i.p.inicio > hoy);
+  });
+  const vigentes = info.filter(i => !i.vencido && !i.futuro);
+  const disponibles = vigentes.reduce((s,i) => s + i.restan, 0);
+  const perdidos = info.filter(i => i.vencido && i.restan > 0).reduce((s,i) => s + i.restan, 0);
+  const proxVence = vigentes.filter(i => i.p.vence && i.restan > 0).map(i => i.p.vence).sort()[0] || '';
+  return { info, disponibles, perdidos, anteriores, sinPeriodo, proxVence };
+}
+function etiquetaPeriodo(p){
+  const a = (p.inicio||'').slice(0,4), b = (p.vence||'').slice(0,4);
+  return b && b !== a ? `${a}–${b}` : (a || 'Periodo');
 }
 
 // Cuenta días hábiles del rango [inicio,fin] que caen dentro de `year`
@@ -1522,54 +1747,47 @@ function renderVacaciones(){
   const summary = $('vacSummary');
   summary.innerHTML = '';
   people.forEach(persona => {
-    const asignados = vacAsignados[persona] || 0;
-    const tomados = vacaciones.filter(v=>v.persona===persona).reduce((s,v)=> s + businessDaysInYear(v.inicio, v.fin, vacYear), 0);
-    const disp = asignados - tomados;
-    const vence = vacVencimientos[persona] || '';
-    let venceHtml = `<span class="vac-vence-status" style="color:var(--text-faint);">Sin fecha</span>`;
-    if(vence){
-      const du = daysUntil(vence);
-      let cls = 'vd-g0-text';
-      if(du < 0) cls = 'vc-vencido'; else if(du <= 30) cls = 'vc-pronto';
-      venceHtml = `<span class="${cls} vac-vence-status">${formatDate(vence)}${du>=0 ? ` (${du}d)` : ' · vencido'}</span>`;
+    const sal = calcularSaldosPersona(persona);
+    const tomadosAnio = vacaciones.filter(v=>v.persona===persona).reduce((s,v)=> s + businessDaysInYear(v.inicio, v.fin, vacYear), 0);
+    let venceHtml = '<span style="color:var(--text-faint);">Sin días por vencer</span>';
+    if(sal.proxVence){
+      const du = daysUntil(sal.proxVence);
+      const cls = du <= 30 ? 'vc-pronto' : 'vd-g0-text';
+      venceHtml = `<span class="${cls}">Vencen ${formatDate(sal.proxVence)} (${du}d)</span>`;
     }
+    const periodosHtml = sal.info.length ? sal.info.slice().reverse().map(i => {
+      const estado = i.vencido ? 'vencido' : (i.futuro ? 'futuro' : 'vigente');
+      const etiquetaEstado = i.vencido ? (i.restan > 0 ? `venció · ${i.restan} sin usar` : 'cerrado') : (i.futuro ? 'aún no inicia' : `vence ${i.p.vence ? formatDate(i.p.vence) : '—'}`);
+      return `<div class="vac-periodo ${estado}">
+        <div class="vp-main">
+          <span class="vp-label">${escapeHtml(etiquetaPeriodo(i.p))}</span>
+          <span class="vp-nums"><b>${i.p.dias}</b> asig · <b>${i.tomados}</b> usados · <b class="${i.restan<0?'neg':''}">${i.restan}</b> quedan</span>
+        </div>
+        <div class="vp-sub">${etiquetaEstado}${i.p.notas ? ' · ' + escapeHtml(i.p.notas) : ''}
+          <span class="vp-actions">
+            <button class="icon-btn" title="Editar periodo" data-paction="edit" data-id="${i.p.id}">✎</button>
+            <button class="icon-btn" title="Eliminar periodo" data-paction="delete" data-id="${i.p.id}">✕</button>
+          </span>
+        </div>
+      </div>`;
+    }).join('') : '<div class="vac-periodo-vacio">Sin periodos. Agrega los días de su aniversario.</div>';
     const card = document.createElement('div');
     card.className = 'vac-card';
     card.innerHTML = `
-      <div class="vac-card-name"><span class="vac-dot" style="background:${personaColor(persona)}"></span>${escapeHtml(persona)}</div>
-      <div class="vac-stats">
-        <div class="vac-stat"><input type="number" min="0" class="vac-asignados-input" data-persona="${escapeHtml(persona)}" data-original="${asignados}" value="${asignados}"><span class="vac-stat-label">Asignados 🔒</span></div>
-        <div class="vac-stat"><span class="vac-stat-num">${tomados}</span><span class="vac-stat-label">Tomados ${vacYear}</span></div>
-        <div class="vac-stat"><span class="vac-stat-num disp">${disp}</span><span class="vac-stat-label">Disponibles</span></div>
+      <div class="vac-card-head">
+        <div class="vac-card-name"><span class="vac-dot" style="background:${personaColor(persona)}"></span>${escapeHtml(persona)}</div>
+        <div class="vac-big ${sal.disponibles<0?'neg':''}"><span>${sal.disponibles}</span><small>disponibles</small></div>
       </div>
-      <div class="vac-vence-row">
-        <div class="vac-vence-top">
-          <span class="vac-stat-label">Vencen 🔒</span>
-          <input type="date" class="vac-vence-input" data-persona="${escapeHtml(persona)}" data-original="${vence}" value="${vence}">
-        </div>
-        ${venceHtml}
-      </div>
+      <div class="vac-card-meta">${venceHtml}<span>· ${tomadosAnio} tomados en ${vacYear}</span>${sal.perdidos ? `<span class="vc-vencido">· ${sal.perdidos} vencidos sin usar</span>` : ''}</div>
+      <div class="vac-periodos">${periodosHtml}</div>
+      <button class="vac-add-periodo" data-persona="${escapeHtml(persona)}">🔒 + Agregar días (aniversario)</button>
     `;
     summary.appendChild(card);
   });
-  summary.querySelectorAll('.vac-asignados-input').forEach(inp => {
-    inp.addEventListener('change', async (e) => {
-      const persona = e.target.dataset.persona;
-      const original = e.target.dataset.original;
-      const val = Math.max(0, parseInt(e.target.value)||0);
+  summary.querySelectorAll('.vac-add-periodo').forEach(btn => {
+    btn.addEventListener('click', async () => {
       const ok = await requireVacAdmin();
-      if(!ok){ e.target.value = original; return; }
-      await mutateData(data => { if(!data.vacAsignados) data.vacAsignados={}; data.vacAsignados[persona] = val; });
-    });
-  });
-  summary.querySelectorAll('.vac-vence-input').forEach(inp => {
-    inp.addEventListener('change', async (e) => {
-      const persona = e.target.dataset.persona;
-      const original = e.target.dataset.original;
-      const val = e.target.value;
-      const ok = await requireVacAdmin();
-      if(!ok){ e.target.value = original; return; }
-      await mutateData(data => { if(!data.vacVencimientos) data.vacVencimientos={}; data.vacVencimientos[persona] = val; });
+      if(ok) openPeriodoEditor(null, btn.dataset.persona);
     });
   });
 
@@ -1603,7 +1821,10 @@ function renderVacaciones(){
         const isToday = dateStr === todayISO;
         let cls = 'vd-weekend';
         let title = '';
-        if(!isWeekend){
+        if(!isWeekend && esFeriado(dateStr)){
+          cls = 'vd-feriado';
+          title = 'Festivo: ' + nombreFeriado(dateStr);
+        } else if(!isWeekend){
           const onVac = vacacionesEnFecha(dateStr);
           const n = onVac.length;
           cls = n === 0 ? 'vd-g0' : (n === 1 ? 'vd-g1' : 'vd-g2');
@@ -1637,13 +1858,14 @@ function renderVacaciones(){
     list.innerHTML = '';
     rangosDelAno.forEach(v => {
       const dias = businessDaysInYear(v.inicio, v.fin, vacYear);
+      const per = v.periodoId ? (vacPeriodos||[]).find(p => p.id === v.periodoId) : null;
       const row = document.createElement('div');
       row.className = 'vac-list-row';
       row.innerHTML = `
         <span class="vac-dot" style="background:${personaColor(v.persona)}"></span>
         <span class="vlr-persona">${escapeHtml(v.persona)}</span>
         <span class="vlr-fechas">${formatDate(v.inicio)} → ${formatDate(v.fin)}${v.notas ? ' · '+escapeHtml(v.notas) : ''}</span>
-        <span class="vlr-dias">${dias} día${dias!==1?'s':''} hábiles</span>
+        <span class="vlr-dias">${dias} día${dias!==1?'s hábiles':' hábil'}${per ? ' · de ' + escapeHtml(etiquetaPeriodo(per)) : ''}</span>
         <button class="icon-btn" title="Editar" data-vaction="edit" data-id="${v.id}">✎</button>
         <button class="icon-btn" title="Eliminar" data-vaction="delete" data-id="${v.id}">✕</button>
       `;
@@ -1656,6 +1878,13 @@ function refreshVacPersonaOptions(){
   const sel = $('vPersona');
   sel.innerHTML = people.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
 }
+function refreshVacPeriodoOptions(selected){
+  const persona = $('vPersona').value;
+  const sal = calcularSaldosPersona(persona);
+  $('vPeriodo').innerHTML = '<option value="">Automático (primero el periodo más viejo vigente)</option>' +
+    sal.info.slice().reverse().map(i => `<option value="${i.p.id}">${escapeHtml(etiquetaPeriodo(i.p))} — quedan ${i.restan}${i.vencido ? ' (vencido)' : ''}</option>`).join('');
+  $('vPeriodo').value = selected ? String(selected) : '';
+}
 function openVacEditor(v){
   refreshVacPersonaOptions();
   editingVacId = v ? v.id : null;
@@ -1664,6 +1893,7 @@ function openVacEditor(v){
   $('vInicio').value = v ? v.inicio : '';
   $('vFin').value = v ? v.fin : '';
   $('vNotas').value = v ? (v.notas||'') : '';
+  refreshVacPeriodoOptions(v ? v.periodoId : null);
   $('vacEditor').classList.add('open');
 }
 function closeVacEditor(){ $('vacEditor').classList.remove('open'); editingVacId = null; }
@@ -1683,9 +1913,7 @@ $('btnVacSave').addEventListener('click', async () => {
   // Avisar (sin bloquear) si con este registro quedarían 2+ personas fuera el mismo día hábil
   const otros = vacaciones.filter(v => v.persona !== persona && v.id !== editingVacId);
   const diasConflicto = new Set();
-  for(let d = new Date(inicio+'T00:00:00'); d <= new Date(fin+'T00:00:00'); d.setDate(d.getDate()+1)){
-    if(!isBusinessDay(d)) continue;
-    const dateStr = d.toISOString().slice(0,10);
+  for(const dateStr of diasHabilesLista(inicio, fin)){
     const yaHay = otros.filter(v => dateStr >= v.inicio && dateStr <= v.fin);
     if(yaHay.length >= 1) diasConflicto.add(dateStr + ' (' + yaHay.map(v=>v.persona).join(', ') + ')');
   }
@@ -1695,7 +1923,8 @@ $('btnVacSave').addEventListener('click', async () => {
     if(!ok) return;
   }
 
-  const newData = { persona, inicio, fin, notas: $('vNotas').value.trim() };
+  const periodoSel = $('vPeriodo').value ? Number($('vPeriodo').value) : null;
+  const newData = { persona, inicio, fin, notas: $('vNotas').value.trim(), periodoId: periodoSel };
   const idToEdit = editingVacId;
   closeVacEditor();
   await mutateData(data => {
@@ -1708,6 +1937,68 @@ $('btnVacSave').addEventListener('click', async () => {
     }
   });
 });
+$('vPersona').addEventListener('change', () => refreshVacPeriodoOptions(null));
+
+function openPeriodoEditor(p, persona){
+  editingPeriodoId = p ? p.id : null;
+  const quien = p ? p.persona : persona;
+  $('periodoEditorTitle').textContent = p ? `Editar periodo — ${quien}` : `Agregar días de vacaciones — ${quien}`;
+  $('pPersona').value = quien;
+  const previos = (vacPeriodos||[]).filter(x => x.persona === quien).sort((a,b)=>(a.inicio||'').localeCompare(b.inicio||''));
+  const ultimo = previos[previos.length-1];
+  const inicioDefault = ultimo && ultimo.vence ? ultimo.vence : todayStr();
+  $('pInicio').value = p ? (p.inicio||'') : inicioDefault;
+  $('pVence').value = p ? (p.vence||'') : sumarAnios(inicioDefault, 1);
+  $('pDias').value = p ? p.dias : '';
+  $('pNotas').value = p ? (p.notas||'') : '';
+  $('periodoHint').textContent = p ? '' : 'Los días que ya tomó se quedan registrados; este periodo solo suma días nuevos.';
+  $('vacPeriodoEditor').classList.add('open');
+  $('vacPeriodoEditor').scrollIntoView({ behavior:'smooth', block:'center' });
+  setTimeout(() => $('pDias').focus(), 150);
+}
+function closePeriodoEditor(){ $('vacPeriodoEditor').classList.remove('open'); editingPeriodoId = null; }
+$('pInicio').addEventListener('change', () => { if(!editingPeriodoId && $('pInicio').value) $('pVence').value = sumarAnios($('pInicio').value, 1); });
+$('btnPeriodoCancel').addEventListener('click', closePeriodoEditor);
+$('btnPeriodoSave').addEventListener('click', async () => {
+  const persona = $('pPersona').value;
+  const dias = parseInt($('pDias').value);
+  const inicio = $('pInicio').value;
+  const vence = $('pVence').value;
+  if(!persona || isNaN(dias) || dias < 0){ $('pDias').focus(); return; }
+  if(!inicio){ $('pInicio').focus(); return; }
+  if(vence && vence < inicio){ await customAlert('Fechas inválidas', 'La fecha en que vencen no puede ser antes del inicio.'); return; }
+  const newData = { persona, dias, inicio, vence, notas: $('pNotas').value.trim() };
+  const idToEdit = editingPeriodoId;
+  closePeriodoEditor();
+  await mutateData(data => {
+    if(!Array.isArray(data.vacPeriodos)) data.vacPeriodos = construirPeriodosIniciales(data);
+    if(idToEdit){
+      const p = data.vacPeriodos.find(p => p.id === idToEdit);
+      if(p) Object.assign(p, newData); else data.vacPeriodos.push({ id: idToEdit, ...newData });
+    } else {
+      data.vacPeriodos.push({ id: Date.now(), ...newData });
+    }
+  });
+});
+$('vacSummary').addEventListener('click', async (e) => {
+  const btn = e.target.closest('button[data-paction]');
+  if(!btn) return;
+  const id = Number(btn.dataset.id);
+  const ok = await requireVacAdmin();
+  if(!ok) return;
+  const p = (vacPeriodos||[]).find(p => p.id === id);
+  if(!p) return;
+  if(btn.dataset.paction === 'edit') openPeriodoEditor(p);
+  else {
+    const conf = await customConfirm('Eliminar periodo', `¿Eliminar el periodo ${etiquetaPeriodo(p)} de ${p.persona} (${p.dias} días)? Las vacaciones registradas NO se borran; solo se recalcula el saldo.`);
+    if(!conf) return;
+    await mutateData(data => {
+      data.vacPeriodos = (data.vacPeriodos||[]).filter(x => x.id !== id);
+      (data.vacaciones||[]).forEach(v => { if(v.periodoId === id) v.periodoId = null; });
+    });
+  }
+});
+
 $('vacYearPrev').addEventListener('click', () => { vacYear--; render(); });
 $('vacYearNext').addEventListener('click', () => { vacYear++; render(); });
 $('vacList').addEventListener('click', async (e) => {
@@ -1958,7 +2249,7 @@ function ticketHtml(task){
             <option value="Finalizado" ${task.estado==='Finalizado'?'selected':''}>Finalizado</option>
           </select>
           <span class="prio prio-${task.priority}"><span class="prio-dot"></span>${task.priority}</span>
-          ${task.estado==='Finalizado' ? '<span class="stamp listo">✓ Finalizado</span>' : (stamp ? `<span class="stamp ${stamp.cls}">${stamp.text}</span>` : '')}
+          ${task.estado==='Finalizado' ? `<span class="stamp listo">✓ Finalizado${task.finalizadoEn ? ' · ' + formatDate(task.finalizadoEn) : ''}</span>` : (stamp ? `<span class="stamp ${stamp.cls}">${stamp.text}</span>` : '')}
         </div>
       </div>
     </div>
@@ -1971,7 +2262,10 @@ function render(){
   const inClientes = currentTab === 'clientes';
   const inVacaciones = currentTab === 'vacaciones';
   const inAmazon = currentTab === 'amazon';
-  const otraSeccion = inClientes || inVacaciones || inAmazon;
+  const inMiDia = currentTab === 'midia';
+  const otraSeccion = inClientes || inVacaciones || inAmazon || inMiDia;
+  $('navMiDia').classList.toggle('active', inMiDia);
+  $('miDiaSection').style.display = inMiDia ? 'block' : 'none';
   $('navPendientes').classList.toggle('active', !otraSeccion);
   $('navClientes').classList.toggle('active', inClientes);
   $('navVacaciones').classList.toggle('active', inVacaciones);
@@ -1980,13 +2274,23 @@ function render(){
   $('stripPendientes').style.display = (!otraSeccion) ? 'grid' : 'none';
   $('stripClientes').style.display = inClientes ? 'grid' : 'none';
   $('dailyBanner').classList.toggle('show', $('dailyBanner').dataset.pending === '1' && !otraSeccion);
-  $('mainToolbar').style.display = (inVacaciones || inAmazon) ? 'none' : 'flex';
+  $('mainToolbar').style.display = (inVacaciones || inAmazon || inMiDia) ? 'none' : 'flex';
   $('vacSection').style.display = inVacaciones ? 'block' : 'none';
   $('amzSection').style.display = inAmazon ? 'block' : 'none';
-  $('queue').style.display = (inVacaciones || inAmazon) ? 'none' : 'flex';
+  $('queue').style.display = (inVacaciones || inAmazon || inMiDia) ? 'none' : 'flex';
   $('clientCharts').style.display = (inClientes && clientes.length) ? 'grid' : 'none';
   const esPestañaPersona = !otraSeccion && currentTab !== 'pendientes';
   $('btnMailPerson').style.display = esPestañaPersona ? 'inline-block' : 'none';
+  if(inMiDia){
+    $('clientEditor').classList.remove('open');
+    $('vacEditor').classList.remove('open');
+    $('amzEditor').classList.remove('open');
+    $('clientToolbar').style.display = 'none';
+    $('clientCharts').style.display = 'none';
+    $('emptyState').style.display = 'none';
+    renderMiDia();
+    return;
+  }
   if(inVacaciones){
     $('editor').classList.remove('open');
     $('clientEditor').classList.remove('open');
@@ -2085,6 +2389,124 @@ function render(){
   }
 }
 
+// ===== MI DÍA =====
+function renderMiDia(){
+  const sec = $('miDiaSection');
+  const yo = getMiPersona();
+  if(!yo || !people.includes(yo)){
+    sec.innerHTML = `
+      <div class="md-picker">
+        <div class="md-hello">¿Quién eres?</div>
+        <div class="md-sub">Elige tu nombre una vez y este navegador lo recordará. Así "Mi día" te muestra solo lo tuyo.</div>
+        <div class="md-chips">${people.map(p => `<button class="md-chip" data-mipersona="${escapeHtml(p)}"><span class="vac-dot" style="background:${personaColor(p)}"></span>${escapeHtml(p)}</button>`).join('')}</div>
+      </div>`;
+    return;
+  }
+  const hoy = todayStr();
+  const mios = tasks.filter(t => t.persona === yo && t.estado === 'Pendiente');
+  const vencidos = sortTasks(mios.filter(t => t.dueDate && daysUntil(t.dueDate) < 0));
+  const hoyManana = sortTasks(mios.filter(t => t.dueDate && daysUntil(t.dueDate) >= 0 && daysUntil(t.dueDate) <= 1));
+  const semana = sortTasks(mios.filter(t => t.dueDate && daysUntil(t.dueDate) >= 2 && daysUntil(t.dueDate) <= 7));
+  const despues = sortTasks(mios.filter(t => t.dueDate && daysUntil(t.dueDate) > 7));
+  const sinFecha = mios.filter(t => !t.dueDate).sort((a,b) => (b.priority==='alta') - (a.priority==='alta'));
+  const cerradasSemana = tasks.filter(t => t.persona === yo && t.estado === 'Finalizado' && t.finalizadoEn && daysUntil(t.finalizadoEn) >= -6).length;
+
+  const licencias = clientes.filter(c => c.responsable === yo && c.vencimiento && daysUntil(c.vencimiento) <= 15)
+    .sort((a,b) => daysUntil(a.vencimiento) - daysUntil(b.vencimiento));
+  const finSemana = ymd(new Date(Date.now() + 6*86400000));
+  const fuera = vacaciones.filter(v => v.persona && v.inicio <= finSemana && v.fin >= hoy)
+    .sort((a,b) => (a.inicio||'').localeCompare(b.inicio||''));
+  const sal = (typeof calcularSaldosPersona === 'function') ? calcularSaldosPersona(yo) : null;
+
+  const fecha = new Date().toLocaleDateString('es-MX', { weekday:'long', day:'numeric', month:'long' });
+  const h = new Date().getHours();
+  const saludo = h < 12 ? 'Buenos días' : (h < 19 ? 'Buenas tardes' : 'Buenas noches');
+
+  const bloque = (titulo, cls, lista, vacio) => `
+    <div class="md-block ${cls}">
+      <div class="md-block-title">${titulo} <span class="md-count">${lista.length}</span></div>
+      ${lista.length ? `<div class="md-list">${lista.map(ticketHtml).join('')}</div>` : `<div class="md-empty">${vacio}</div>`}
+    </div>`;
+
+  sec.innerHTML = `
+    <div class="md-head">
+      <div>
+        <div class="md-hello">${saludo}, ${escapeHtml(yo)}</div>
+        <div class="md-sub">${fecha} · <a href="#" class="md-change" data-mipersona="">no soy ${escapeHtml(yo)}</a></div>
+      </div>
+      <button class="btn-new" id="mdNew">+ Nuevo pendiente</button>
+    </div>
+    <div class="md-kpis">
+      <div class="md-kpi alert"><b>${vencidos.length}</b><span>Vencidos</span></div>
+      <div class="md-kpi soon"><b>${hoyManana.length}</b><span>Hoy / mañana</span></div>
+      <div class="md-kpi"><b>${semana.length}</b><span>Esta semana</span></div>
+      <div class="md-kpi done"><b>${cerradasSemana}</b><span>Cerradas en 7 días</span></div>
+    </div>
+    <div class="md-grid">
+      <div class="md-main">
+        ${bloque('🔴 Vencidos', 'b-alert', vencidos, 'Nada vencido. 👌')}
+        ${bloque('🟡 Hoy y mañana', 'b-soon', hoyManana, 'Nada para hoy ni mañana.')}
+        ${bloque('📅 Próximos 7 días', '', semana, 'Semana libre por ahora.')}
+        ${despues.length ? bloque('🗓️ Más adelante', '', despues, '') : ''}
+        <div class="md-block">
+          <div class="md-block-title md-toggle" id="mdSinFechaToggle">${miDiaSinFechaOpen ? '▾' : '▸'} Sin fecha <span class="md-count">${sinFecha.length}</span></div>
+          ${miDiaSinFechaOpen ? (sinFecha.length ? `<div class="md-list">${sinFecha.map(ticketHtml).join('')}</div>` : '<div class="md-empty">Ninguno.</div>') : ''}
+        </div>
+      </div>
+      <div class="md-side">
+        <div class="md-card">
+          <div class="md-card-title">🏢 Tus licencias por vencer</div>
+          ${licencias.length ? licencias.map(c => { const st = licenseStampFor(c.vencimiento); return `<div class="md-row"><span>${escapeHtml(c.nombre)}<small>${escapeHtml(c.solucion||'')}</small></span><span class="stamp ${st.cls}">${st.text}</span></div>`; }).join('') : '<div class="md-empty">Ninguna en los próximos 15 días.</div>'}
+        </div>
+        <div class="md-card">
+          <div class="md-card-title">🏖️ Fuera esta semana</div>
+          ${fuera.length ? fuera.map(v => `<div class="md-row"><span><span class="vac-dot" style="background:${personaColor(v.persona)};display:inline-block;margin-right:6px;"></span>${escapeHtml(v.persona)}</span><small>${formatDate(v.inicio)} → ${formatDate(v.fin)}</small></div>`).join('') : '<div class="md-empty">Todo el equipo disponible.</div>'}
+        </div>
+        ${sal ? `<div class="md-card">
+          <div class="md-card-title">🌴 Tus vacaciones</div>
+          <div class="md-row"><span>Disponibles</span><b class="${sal.disponibles<0?'neg':''}" style="font-size:18px;font-family:'Space Grotesk';">${sal.disponibles}</b></div>
+          ${sal.proxVence ? `<div class="md-row"><span>Vencen</span><small>${formatDate(sal.proxVence)} (${daysUntil(sal.proxVence)}d)</small></div>` : ''}
+        </div>` : ''}
+      </div>
+    </div>`;
+}
+
+$('miDiaSection').addEventListener('click', async (e) => {
+  const pick = e.target.closest('[data-mipersona]');
+  if(pick){ e.preventDefault(); setMiPersona(pick.dataset.mipersona); render(); return; }
+  if(e.target.closest('#mdSinFechaToggle')){ miDiaSinFechaOpen = !miDiaSinFechaOpen; render(); return; }
+  if(e.target.closest('#mdNew')){
+    openEditor(null);
+    $('fPersona').value = getMiPersona();
+    $('editor').scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+  const btn = e.target.closest('button[data-action]');
+  if(!btn) return;
+  const id = Number(btn.dataset.id);
+  if(btn.dataset.action === 'delete'){
+    const ok = await customConfirm('Eliminar pendiente', '¿Eliminar este pendiente? Esta acción no se puede deshacer.');
+    if(ok) await mutateData(data => { data.tasks = data.tasks.filter(t=>t.id!==id); });
+  } else if(btn.dataset.action === 'edit'){
+    openEditor(tasks.find(t=>t.id===id));
+    $('editor').scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+});
+$('miDiaSection').addEventListener('change', async (e) => {
+  const sel = e.target.closest('select[data-action="estado"]');
+  if(!sel) return;
+  const id = Number(sel.dataset.id);
+  const newEstado = sel.value;
+  await mutateData(data => {
+    const t = data.tasks.find(t=>t.id===id);
+    if(t){
+      if(t.estado !== 'Finalizado' && newEstado === 'Finalizado') t.finalizadoEn = todayStr();
+      if(newEstado === 'Pendiente') delete t.finalizadoEn;
+      t.estado = newEstado;
+    }
+  });
+});
+
 function renderTabs(){
   const bar = $('sheetTabs');
   bar.innerHTML = '';
@@ -2103,8 +2525,12 @@ function renderTabs(){
     tab.innerHTML = `Tareas ${escapeHtml(persona)} <span class="count">${count}</span>`;
     tab.addEventListener('click', () => { currentTab=persona; doneOpen=false; render(); });
     tab.addEventListener('dblclick', async () => {
-      const ok = await customConfirm('Quitar persona', `¿Quitar a ${persona} y sus tareas? Esto no se puede deshacer.`);
+      const autorizado = await requireVacAdmin();
+      if(!autorizado) return;
+      const n = tasks.filter(t=>t.persona===persona).length;
+      const ok = await customConfirm('Quitar persona', `¿Quitar a ${persona} y sus ${n} tarea(s)? Antes de borrar se descargará un respaldo a tu computadora.`);
       if(ok){
+        descargarRespaldoLocal('antes-de-quitar-' + persona);
         currentTab = 'pendientes';
         await mutateData(data => {
           data.tasks = data.tasks.filter(t=>t.persona!==persona);
@@ -2246,9 +2672,13 @@ $('btnSave').addEventListener('click', async () => {
   await mutateData(data => {
     if(idToEdit){
       const t = data.tasks.find(t=>t.id===idToEdit);
-      if(t) Object.assign(t, newData); else data.tasks.push({ id: idToEdit, ...newData });
+      if(t){
+        if(t.estado !== 'Finalizado' && newData.estado === 'Finalizado') t.finalizadoEn = todayStr();
+        if(newData.estado === 'Pendiente') delete t.finalizadoEn;
+        Object.assign(t, newData);
+      } else data.tasks.push({ id: idToEdit, ...newData });
     } else {
-      data.tasks.push({ id: Date.now(), ...newData });
+      data.tasks.push({ id: Date.now(), creadoEn: todayStr(), ...newData, ...(newData.estado==='Finalizado' ? { finalizadoEn: todayStr() } : {}) });
     }
   });
 });
@@ -2273,11 +2703,16 @@ $('queue').addEventListener('change', async (e) => {
   const newEstado = sel.value;
   await mutateData(data => {
     const t = data.tasks.find(t=>t.id===id);
-    if(t) t.estado = newEstado;
+    if(t){
+      if(t.estado !== 'Finalizado' && newEstado === 'Finalizado') t.finalizadoEn = todayStr();
+      if(newEstado === 'Pendiente') delete t.finalizadoEn;
+      t.estado = newEstado;
+    }
   });
 });
 
 $('navPendientes').addEventListener('click', () => { currentTab = 'pendientes'; render(); });
+$('navMiDia').addEventListener('click', () => { currentTab = 'midia'; render(); });
 $('navClientes').addEventListener('click', () => { currentTab = 'clientes'; render(); });
 $('navVacaciones').addEventListener('click', () => { currentTab = 'vacaciones'; render(); });
 $('navAmazon').addEventListener('click', () => { currentTab = 'amazon'; render(); });
@@ -2382,8 +2817,25 @@ $('btnMailPerson').addEventListener('click', async () => {
   }
 });
 
+function datosActualesJSON(){
+  return JSON.stringify({ tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, vacPeriodos: vacPeriodos || [], personEmails, reportesAmazon }, null, 2);
+}
+// Baja un .json a la computadora de quien está usando el panel (red de seguridad antes de reemplazar/borrar)
+function descargarRespaldoLocal(motivo){
+  try{
+    const blob = new Blob([datosActualesJSON()], { type:'application/json' });
+    const a = document.createElement('a');
+    const stamp = new Date().toISOString().replace(/[:T]/g,'-').slice(0,16);
+    a.href = URL.createObjectURL(blob);
+    a.download = `respaldo-panel-${motivo}-${stamp}.json`.replace(/[^a-zA-Z0-9._-]/g,'_');
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  }catch(e){ console.error('No se pudo descargar el respaldo local', e); }
+}
+
 $('btnExport').addEventListener('click', () => {
-  const payload = JSON.stringify({ tasks, people, clientes, vacaciones, vacAsignados, vacVencimientos, personEmails, reportesAmazon }, null, 2);
+  const payload = datosActualesJSON();
+  descargarRespaldoLocal('manual');
   $('backupText').value = payload;
   $('backupModal').classList.add('open');
   setTimeout(() => { $('backupText').focus(); $('backupText').select(); }, 50);
@@ -2401,7 +2853,9 @@ $('btnBackupCopy').addEventListener('click', async () => {
   setTimeout(() => { $('btnBackupCopy').textContent = '📋 Copiar todo'; }, 2000);
 });
 
-$('btnImport').addEventListener('click', () => {
+$('btnImport').addEventListener('click', async () => {
+  const ok = await requireVacAdmin();
+  if(!ok) return;
   $('importText').value = '';
   $('importModal').classList.add('open');
 });
@@ -2411,7 +2865,10 @@ $('btnImportApply').addEventListener('click', async () => {
     const parsed = JSON.parse($('importText').value);
     const ok = await customConfirm('Cargar respaldo', `Este respaldo tiene ${parsed.tasks?.length||0} pendientes, ${parsed.clientes?.length||0} clientes y ${parsed.vacaciones?.length||0} registros de vacaciones.\n\n¿Reemplazar TODO lo que hay ahora con este respaldo? Esto no se puede deshacer.`);
     if(!ok) return;
+    descargarRespaldoLocal('antes-de-cargar');
     await mutateData(data => {
+      if(Array.isArray(parsed.vacPeriodos)) data.vacPeriodos = parsed.vacPeriodos;
+      else delete data.vacPeriodos; // respaldo viejo: se vuelve a migrar solo desde vacAsignados
       data.tasks = parsed.tasks || [];
       data.people = parsed.people || data.people;
       data.clientes = parsed.clientes || [];
@@ -2453,6 +2910,7 @@ $('btnRestoreAuto').addEventListener('click', async () => {
     const confirmar = await customConfirm('Confirmar restauración',
       `El respaldo del ${eleccion.trim()} tiene ${(backupData.tasks||[]).length} pendientes, ${(backupData.clientes||[]).length} clientes y ${(backupData.reportesAmazon||[]).length} reportes Amazon.\n\n¿Reemplazar TODO lo que hay ahora mismo con esta versión? Esto no se puede deshacer.`);
     if(!confirmar) return;
+    descargarRespaldoLocal('antes-de-restaurar');
     delete backupData._respaldadoEn;
     await fbDocRef.set(backupData);
     await customAlert('Listo', 'Se restauró el respaldo del ' + eleccion.trim() + '.');
@@ -2524,7 +2982,7 @@ $('dailyBannerClose').addEventListener('click', async () => {
 });
 
 setToday();
-loadData().then(checkDailyBanner);
+loadData();
 </script>
 </body>
 </html>
